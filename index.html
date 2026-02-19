@@ -333,7 +333,7 @@
                     "Compatible con todas las marcas principales"
                 ],
                 benefits: "Reduce tu consumo eléctrico y aumenta la comodidad con automatizaciones inteligentes.",
-                price: "Desde $50.000"
+                price: "-"
             },
             {
                 id: 2,
@@ -353,7 +353,7 @@
                     "Soporte técnico incluido por 3 meses"
                 ],
                 benefits: "Controla tu hogar con tu voz. Crea escenas como 'Buenos días' que encienden luces y preparan el café.",
-                price: "Desde $80.000"
+                price: "-"
             },
             {
                 id: 3,
@@ -372,7 +372,7 @@
                     "Alertas de seguridad en tiempo real"
                 ],
                 benefits: "Olvídate de las llaves. Controla quién entra y cuándo con total seguridad.",
-                price: "Desde $150.000"
+                price: "-"
             },
             {
                 id: 4,
@@ -390,7 +390,7 @@
                     "Integración de todos los dispositivos"
                 ],
                 benefits: "El cerebro de tu casa inteligente. Automatizaciones avanzadas sin depender de la nube.",
-                price: "Desde $200.000"
+                price: "-"
             },
             {
                 id: 5,
@@ -408,7 +408,7 @@
                     "Registro y notificaciones de aperturas"
                 ],
                 benefits: "Llegaste a casa y el portón se abre solo. Nunca más esperes bajo la lluvia.",
-                price: "Desde $120.000"
+                price: "-"
             },
             {
                 id: 6,
@@ -426,7 +426,7 @@
                     "Sincronización con música en tiempo real"
                 ],
                 benefits: "Crea ambientes únicos con iluminación de alta gama. Ideal para sala, cocina y dormitorios.",
-                price: "Desde $60.000/metro"
+                price: "-"
             },
             {
                 id: 7,
@@ -444,7 +444,7 @@
                     "Rutinas automatizadas inteligentes"
                 ],
                 benefits: "Un solo control para todo. Automatiza tu AC para que se apague cuando sales de casa.",
-                price: "Desde $45.000"
+                price: "-"
             },
             {
                 id: 8,
@@ -462,7 +462,7 @@
                     "Historial completo de datos climáticos"
                 ],
                 benefits: "Mantén el clima perfecto. El AC se enciende automáticamente si la temperatura sube de 25°C.",
-                price: "Desde $35.000"
+                price: "-"
             },
             {
                 id: 9,
@@ -480,7 +480,7 @@
                     "Automatizaciones por eventos detectados"
                 ],
                 benefits: "Solo recibe alertas importantes. La IA distingue entre personas, mascotas y movimientos.",
-                price: "Desde $100.000"
+                price: "-"
             },
             {
                 id: 10,
@@ -498,7 +498,7 @@
                     "Instalación inalámbrica sin obras"
                 ],
                 benefits: "Las luces se encienden cuando entras y se apagan cuando sales. Automático y eficiente.",
-                price: "Desde $30.000"
+                price: "-"
             },
             {
                 id: 11,
@@ -516,7 +516,7 @@
                     "Control grupal de múltiples enchufes"
                 ],
                 benefits: "Convierte cualquier aparato en inteligente. Monitorea y controla el consumo energético.",
-                price: "Desde $25.000"
+                price: "-"
             },
             {
                 id: 12,
@@ -534,7 +534,7 @@
                     "Diseño elegante y discreto minimalista"
                 ],
                 benefits: "Un botón para 'Modo Cine': apaga luces, cierra cortinas, enciende TV y proyector.",
-                price: "Desde $40.000"
+                price: "-"
             },
             {
                 id: 13,
@@ -554,7 +554,7 @@
                     "Batería de ultra larga duración (2 años)"
                 ],
                 benefits: "Recibe alertas si alguien abre una puerta. Automatiza el AC para apagarse con ventanas abiertas.",
-                price: "Desde $28.000"
+                price: "-"
             },
             {
                 id: 14,
@@ -573,7 +573,7 @@
                     "Pruebas automáticas periódicas mensuales"
                 ],
                 benefits: "Protección 24/7. Alertas incluso cuando no estás en casa para actuar rápido.",
-                price: "Desde $55.000"
+                price: "-"
             }
         ];
 
@@ -612,7 +612,7 @@
             },
             {
                 id: 5,
-                title: "Automatización con Alexa",
+                title: "Control ampolletas inteligentes con Alexa",
                 description: "Demostración de rutinas de voz personalizadas: 'Alexa, buenos días' activa luces, noticias y cafetera.",
                 thumbnail: "imagenes/ampolleta_int_alexa.avif",
                 duration: "3:30",
@@ -704,7 +704,7 @@
                             ${service.description}
                         </p>
                         <div class="mt-auto">
-                            <div class="text-primary font-bold text-lg mb-3">${service.price}</div>
+                            <div class="text-primary font-bold text-lg mb-3 text-center">${service.price}</div>
                             <button 
                                 onclick="openServiceModal(${service.id})"
                                 class="w-full py-2.5 rounded-xl border border-slate-200 text-sm font-bold text-slate-900 hover:bg-slate-50 transition-colors uppercase tracking-wider"
@@ -949,7 +949,7 @@
                         <span class="material-symbols-outlined text-3xl text-primary">${service.icon}</span>
                         <h2 class="text-3xl font-bold text-slate-900">${service.title}</h2>
                     </div>
-                    <p class="text-2xl font-bold text-primary mb-6">${service.price}</p>
+                    <p class="text-2xl font-bold text-primary mb-6 text-center">${service.price}</p>
                     <p class="text-slate-600 mb-6 leading-relaxed">${service.description}</p>
                     
                     <div class="mb-6">
