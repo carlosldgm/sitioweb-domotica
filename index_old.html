@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>Smart Solutions - Catálogo de Domótica 2024</title>
+    <title>Domotic Solutions - Catálogo de Domótica 2026</title>
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet"/>
@@ -118,7 +118,7 @@
                             </span>
                         </button>
                         <button 
-                            data-category="Seguridad"
+                            data-category="Security"
                             class="category-filter w-full flex items-center justify-between px-4 py-3 rounded-xl text-slate-600 hover:bg-white hover:shadow-soft transition-all group"
                         >
                             <span class="flex items-center gap-3">
@@ -127,7 +127,7 @@
                             </span>
                         </button>
                         <button 
-                            data-category="Climatización"
+                            data-category="Climate"
                             class="category-filter w-full flex items-center justify-between px-4 py-3 rounded-xl text-slate-600 hover:bg-white hover:shadow-soft transition-all group"
                         >
                             <span class="flex items-center gap-3">
@@ -136,7 +136,7 @@
                             </span>
                         </button>
                         <button 
-                            data-category="Entretención"
+                            data-category="Entertainment"
                             class="category-filter w-full flex items-center justify-between px-4 py-3 rounded-xl text-slate-600 hover:bg-white hover:shadow-soft transition-all group"
                         >
                             <span class="flex items-center gap-3">
@@ -207,54 +207,7 @@
     <div id="serviceModal" class="hidden fixed inset-0 z-50 overflow-y-auto bg-slate-900/50 backdrop-blur-sm">
         <div class="min-h-screen px-4 flex items-center justify-center">
             <div class="bg-white rounded-3xl max-w-3xl w-full shadow-2xl overflow-hidden">
-                <div class="relative h-80">
-                    <img id="modalImage" class="w-full h-full object-cover" src="" alt=""/>
-                    <button 
-                        onclick="closeServiceModal()"
-                        class="absolute top-4 right-4 w-10 h-10 rounded-full bg-white/90 backdrop-blur-sm flex items-center justify-center hover:bg-white transition-colors"
-                    >
-                        <span class="material-icons-round text-slate-900">close</span>
-                    </button>
-                </div>
-                <div class="p-8">
-                    <div class="flex items-center gap-2 mb-4">
-                        <span id="modalIcon" class="material-symbols-outlined text-3xl text-primary"></span>
-                        <h2 id="modalTitle" class="text-3xl font-bold text-slate-900"></h2>
-                    </div>
-                    <p id="modalPrice" class="text-2xl font-bold text-primary mb-6"></p>
-                    <p id="modalDescription" class="text-slate-600 mb-6 leading-relaxed"></p>
-                    
-                    <div class="mb-6">
-                        <h3 class="font-bold text-slate-900 mb-3 flex items-center gap-2">
-                            <span class="material-icons-round text-primary">check_circle</span>
-                            Características
-                        </h3>
-                        <ul id="modalFeatures" class="space-y-2"></ul>
-                    </div>
-
-                    <div class="bg-blue-50 rounded-2xl p-6 mb-6">
-                        <h3 class="font-bold text-slate-900 mb-2 flex items-center gap-2">
-                            <span class="material-icons-round text-primary">star</span>
-                            Beneficio Principal
-                        </h3>
-                        <p id="modalBenefits" class="text-slate-700"></p>
-                    </div>
-
-                    <div class="flex gap-4">
-                        <button 
-                            onclick="document.getElementById('contactModal').classList.remove('hidden'); closeServiceModal();"
-                            class="flex-1 bg-primary text-white py-3 rounded-xl font-bold hover:bg-blue-600 transition-colors"
-                        >
-                            Solicitar Cotización
-                        </button>
-                        <button 
-                            onclick="closeServiceModal()"
-                            class="px-6 py-3 rounded-xl border border-slate-200 font-bold hover:bg-slate-50 transition-colors"
-                        >
-                            Cerrar
-                        </button>
-                    </div>
-                </div>
+                <!-- El contenido se generará dinámicamente con JavaScript -->
             </div>
         </div>
     </div>
@@ -318,7 +271,7 @@
                         </div>
                         <div>
                             <div class="font-bold text-slate-900">Teléfono</div>
-                            <div class="text-sm text-slate-500">+56 9 1234 5678</div>
+                            <div class="text-sm text-slate-500">+56 9 82489225</div>
                         </div>
                     </a>
 
@@ -328,12 +281,12 @@
                         </div>
                         <div>
                             <div class="font-bold text-slate-900">Email</div>
-                            <div class="text-sm text-slate-500"><span class="__cf_email__" data-cfemail="51323e3f253032253e11223c302325223e3d2425383e3f227f323d">[email&#160;protected]</span></div>
+                            <div class="text-sm text-slate-500"><span class="__cf_email__" data-cfemail="51323e3f253032253e11223c302325223e3d2425383e3f227f323d">[carlosldgm@gmail.com]</span></div>
                         </div>
                     </a>
 
                     <a 
-                        href="https://wa.me/56912345678"
+                        href="https://wa.me/56982489225"
                         target="_blank"
                         class="flex items-center gap-4 p-4 rounded-xl border border-slate-200 hover:border-green-500 hover:bg-green-50 transition-all group"
                     >
@@ -365,9 +318,13 @@
             {
                 id: 1,
                 title: "Control de Luces y Enchufes",
-                category: "Iluminación",
+                category: "Lighting",
                 icon: "lightbulb",
-                image: "imagenes/enchufes_int_modelo_clasico.webp?w=600&h=400&fit=crop&q=80",
+                images: [
+                    "imagenes/int_modelo_clasico.webp?w=600&h=400&fit=crop&q=80",
+                    "imagenes/int_negro.webp?w=600&h=400&fit=crop&q=80",
+                    "imagenes/int_negro_asistentes.webp?w=600&h=400&fit=crop&q=80",
+                ],
                 description: "Controla todas las luces y dispositivos de tu hogar desde tu smartphone o con comandos de voz.",
                 features: [
                     "Control remoto desde cualquier lugar",
@@ -381,9 +338,13 @@
             {
                 id: 2,
                 title: "Asistentes Virtuales",
-                category: "Asistentes",
+                category: "Entertainment",
                 icon: "mic",
-                image: "imagenes/alexa-google home.jpeg?w=800&h=600&fit=crop&q=80",
+                images: [
+                    "imagenes/alexa-google home.jpeg?w=800&h=600&fit=crop&q=80",
+                    "imagenes/Alexa Echo Dot 5.webp?w=600&h=400&fit=crop&q=80",
+                    "imagenes/Alexa Echo Pop.jpeg?w=600&h=400&fit=crop&q=80",
+                ],
                 description: "Instalación y configuración profesional de Alexa y Google Home para controlar tu hogar por voz.",
                 features: [
                     "Configuración completa de dispositivos",
@@ -397,9 +358,12 @@
             {
                 id: 3,
                 title: "Cerraduras Inteligentes",
-                category: "Seguridad",
+                category: "Security",
                 icon: "lock",
-                image: "imagenes/cerradura-inteligente-con-huella.jpg?w=800&h=600&fit=crop&q=80",
+                images: [
+                    "imagenes/cerradura-inteligente-con-huella.jpg?w=800&h=600&fit=crop&q=80",
+                    "imagenes/cerradura-inteligente-con-huella1.avif?w=800&h=600&fit=crop&q=80",
+                ],
                 description: "Acceso seguro y sin llaves a tu hogar con tecnología de cerradura inteligente de última generación.",
                 features: [
                     "Apertura con smartphone, código o huella",
@@ -413,9 +377,11 @@
             {
                 id: 4,
                 title: "Home Assistant Central",
-                category: "Entretención",
+                category: "Entertainment",
                 icon: "hub",
-                image: "imagenes/raspberry-pi-5-4.webp?w=800&h=600&fit=crop&q=80",
+                images: [
+                    "imagenes/raspberry-pi-5-4.webp?w=800&h=600&fit=crop&q=80",
+                ],
                 description: "Sistema de automatización central con Raspberry Pi. Control total y personalizado de tu hogar inteligente.",
                 features: [
                     "Hub central con Raspberry Pi 4/5",
@@ -429,9 +395,11 @@
             {
                 id: 5,
                 title: "Control de Portones WiFi",
-                category: "Seguridad",
+                category: "Security",
                 icon: "garage",
-                image: "imagenes/porton-garage.avif?w=800&h=600&fit=crop&q=80",
+                images: [
+                    "imagenes/porton-garage.avif?w=800&h=600&fit=crop&q=80",
+                ],
                 description: "Abre y cierra tu portón desde tu smartphone o automáticamente al llegar a casa con geolocalización.",
                 features: [
                     "Apertura remota desde cualquier lugar",
@@ -445,9 +413,11 @@
             {
                 id: 6,
                 title: "Iluminación LED COB",
-                category: "Iluminación",
+                category: "Lighting",
                 icon: "light_mode",
-                image: "imagenes/leds-cob.avif?w=800&h=600&fit=crop&q=80",
+                images: [
+                    "imagenes/leds-cob.avif?w=800&h=600&fit=crop&q=80",
+                ],
                 description: "Instalación de tiras LED COB de alta calidad con control automático y personalizable de colores.",
                 features: [
                     "Iluminación uniforme sin puntos LED",
@@ -461,9 +431,11 @@
             {
                 id: 7,
                 title: "Control Infrarrojo Universal",
-                category: "Entretención",
+                category: "Entertainment",
                 icon: "settings_remote",
-                image: "imagenes/smart-ir-remote.avif?w=800&h=600&fit=crop&q=80",
+                images: [
+                   "imagenes/smart-ir-remote.avif?w=800&h=600&fit=crop&q=80",
+                ],
                 description: "Controla todos tus dispositivos IR (TV, AC, ventiladores) desde una sola app o por comandos de voz.",
                 features: [
                     "Control de aires acondicionados",
@@ -477,9 +449,11 @@
             {
                 id: 8,
                 title: "Sensores de Clima",
-                category: "Climatización",
+                category: "Climate",
                 icon: "thermostat",
-                image: "imagenes/termostato-wifi.avif?w=800&h=600&fit=crop&q=80",
+                images: [
+                   "imagenes/termostato-wifi.avif?w=800&h=600&fit=crop&q=80",
+                ],
                 description: "Monitoreo de temperatura y humedad en tiempo real con automatizaciones inteligentes de climatización.",
                 features: [
                     "Datos precisos de temperatura y humedad",
@@ -493,9 +467,11 @@
             {
                 id: 9,
                 title: "Cámaras Inteligentes con IA",
-                category: "Seguridad",
+                category: "Security",
                 icon: "videocam",
-                image: "imagenes/camara-ext-ia.jpg?w=800&h=600&fit=crop&q=80",
+                images: [
+                   "imagenes/camara-ext-ia.jpg?w=800&h=600&fit=crop&q=80",
+                ],
                 description: "Sistemas de vigilancia inteligentes con detección de personas, animales, vehículos y automatizaciones.",
                 features: [
                     "Detección inteligente con IA avanzada",
@@ -511,7 +487,9 @@
                 title: "Sensores de Presencia PIR",
                 category: "Lighting",
                 icon: "sensors",
-                image: "imagenes/sensor-presencia.avif?w=800&h=600&fit=crop&q=80",
+                images: [
+                   "imagenes/sensor-presencia.avif?w=800&h=600&fit=crop&q=80",
+                ],
                 description: "Detección de movimiento para automatizar luces, seguridad y climatización con máxima eficiencia.",
                 features: [
                     "Encendido automático de luces",
@@ -527,7 +505,9 @@
                 title: "Enchufes Inteligentes",
                 category: "Lighting",
                 icon: "power",
-                image: "imagenes/enchufe-int.avif?w=800&h=600&fit=crop&q=80",
+                images: [
+                   "imagenes/enchufe-int.avif?w=800&h=600&fit=crop&q=80",
+                ],
                 description: "Soporte para múltiples marcas y tipos de enchufes inteligentes con configuración óptima.",
                 features: [
                     "Compatible con Tuya, Tasmota, Shelly",
@@ -541,9 +521,11 @@
             {
                 id: 12,
                 title: "Botones Digitales",
-                category: "Entretención",
+                category: "Entertainment",
                 icon: "radio_button_checked",
-                image: "imagenes/boton-int.avif?w=800&h=600&fit=crop&q=80",
+                images: [
+                   "imagenes/boton-int.avif?w=800&h=600&fit=crop&q=80",
+                ],
                 description: "Botones inalámbricos programables para activar escenas complejas y controlar múltiples dispositivos.",
                 features: [
                     "Instalación inalámbrica sin cables",
@@ -557,9 +539,13 @@
             {
                 id: 13,
                 title: "Sensores de Apertura",
-                category: "Seguridad",
+                category: "Security",
                 icon: "door_sensor",
-                image: "https://images.unsplash.com/photo-1563013544-824ae1b704d3?w=800&h=600&fit=crop&q=80",
+                images: [
+                   "imagenes/sensor-apertura1.avif?w=800&h=600&fit=crop&q=80",
+                   "imagenes/sensor-apertura2.avif?w=800&h=600&fit=crop&q=80",
+                   "imagenes/sensor-apertura3.avif?w=800&h=600&fit=crop&q=80",
+                ],
                 description: "Monitoreo de puertas y ventanas con alertas de seguridad instantáneas y automatizaciones inteligentes.",
                 features: [
                     "Alertas instantáneas de apertura",
@@ -573,9 +559,12 @@
             {
                 id: 14,
                 title: "Detectores de Humo",
-                category: "Seguridad",
+                category: "Security",
                 icon: "smoke_detector",
-                image: "https://images.unsplash.com/photo-1584438784894-089d6a62b8fa?w=800&h=600&fit=crop&q=80",
+                images: [
+                   "imagenes/sensor-humo1.avif?w=800&h=600&fit=crop&q=80",
+                   "imagenes/sensor-humo2.avif?w=800&h=600&fit=crop&q=80",
+                ],
                 description: "Sensores inteligentes de humo e incendio con alertas inmediatas a tu smartphone y sirena potente.",
                 features: [
                     "Detección temprana de humo e incendios",
@@ -623,11 +612,11 @@
             },
             {
                 id: 5,
-                title: "Automatización con Alexa y Google Home",
+                title: "Control ampolletas inteligentes con Alexa",
                 description: "Demostración de rutinas de voz personalizadas: 'Alexa, buenos días' activa luces, noticias y cafetera.",
-                thumbnail: "https://images.unsplash.com/photo-1518444065439-e933c06ce9cd?w=800&h=600&fit=crop&q=80",
+                thumbnail: "imagenes/ampolleta_int_alexa.avif",
                 duration: "3:30",
-                videoUrl: "https://www.youtube.com/embed/PSm4hGN4ZNc"
+                videoUrl: "videos/amp-int_alexa.mp4"
             },
             {
                 id: 6,
@@ -642,7 +631,12 @@
         // Render services
         function renderServices() {
             const grid = document.getElementById('servicesGrid');
-            grid.innerHTML = services.map(service => `
+            grid.innerHTML = services.map(service => {
+                // Soporte para imagen única o múltiples imágenes
+                const imageArray = service.images || [service.image];
+                const hasMultipleImages = imageArray.length > 1;
+                
+                return `
                 <div 
                     class="service-card bg-white rounded-2xl overflow-hidden shadow-soft border border-slate-100 card-hover group flex flex-col"
                     data-category="${service.category}"
@@ -650,16 +644,59 @@
                     data-description="${service.description.toLowerCase()}"
                 >
                     <div class="h-56 relative overflow-hidden">
-                        <img 
-                            alt="${service.title}"
-                            class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
-                            src="${service.image}"
-                        />
+                        <!-- Contenedor de imágenes -->
+                        <div class="image-gallery relative w-full h-full" data-service-id="${service.id}">
+                            ${imageArray.map((img, index) => `
+                                <img 
+                                    alt="${service.title}"
+                                    class="gallery-image absolute inset-0 w-full h-full object-contain bg-slate-50 group-hover:scale-105 transition-transform duration-500 ${index === 0 ? 'opacity-100' : 'opacity-0'}"
+                                    src="${img}"
+                                    data-index="${index}"
+                                />
+                            `).join('')}
+                        </div>
+                        
+                        <!-- Navegación de imágenes (solo si hay múltiples) -->
+                        ${hasMultipleImages ? `
+                            <button 
+                                onclick="event.stopPropagation(); changeImage(${service.id}, -1)"
+                                class="absolute left-2 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-white/90 backdrop-blur-sm flex items-center justify-center hover:bg-white transition-all shadow-lg z-10"
+                            >
+                                <span class="material-icons-round text-slate-900 text-lg">chevron_left</span>
+                            </button>
+                            <button 
+                                onclick="event.stopPropagation(); changeImage(${service.id}, 1)"
+                                class="absolute right-2 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-white/90 backdrop-blur-sm flex items-center justify-center hover:bg-white transition-all shadow-lg z-10"
+                            >
+                                <span class="material-icons-round text-slate-900 text-lg">chevron_right</span>
+                            </button>
+                            
+                            <!-- Indicadores de puntos -->
+                            <div class="absolute bottom-2 left-1/2 -translate-x-1/2 flex gap-1.5 z-10">
+                                ${imageArray.map((_, index) => `
+                                    <button 
+                                        onclick="event.stopPropagation(); setImage(${service.id}, ${index})"
+                                        class="image-dot w-2 h-2 rounded-full transition-all ${index === 0 ? 'bg-white w-6' : 'bg-white/60'}"
+                                        data-dot-index="${index}"
+                                    ></button>
+                                `).join('')}
+                            </div>
+                        ` : ''}
+                        
                         <div class="absolute top-4 left-4">
                             <span class="px-2.5 py-1 rounded-full bg-white/90 backdrop-blur-sm text-[10px] font-bold uppercase text-slate-900 shadow-sm">
                                 ${service.category}
                             </span>
                         </div>
+                        
+                        ${hasMultipleImages ? `
+                            <div class="absolute top-4 right-4">
+                                <span class="px-2 py-1 rounded-full bg-black/60 backdrop-blur-sm text-[10px] text-white font-medium flex items-center gap-1">
+                                    <span class="material-icons-round text-xs">photo_library</span>
+                                    ${imageArray.length}
+                                </span>
+                            </div>
+                        ` : ''}
                     </div>
                     <div class="p-5 flex flex-col flex-1">
                         <h3 class="text-lg font-bold mb-2">${service.title}</h3>
@@ -667,7 +704,7 @@
                             ${service.description}
                         </p>
                         <div class="mt-auto">
-                            <div class="text-primary font-bold text-lg mb-3">${service.price}</div>
+                            <div class="text-primary font-bold text-lg mb-3 text-center">${service.price}</div>
                             <button 
                                 onclick="openServiceModal(${service.id})"
                                 class="w-full py-2.5 rounded-xl border border-slate-200 text-sm font-bold text-slate-900 hover:bg-slate-50 transition-colors uppercase tracking-wider"
@@ -677,7 +714,14 @@
                         </div>
                     </div>
                 </div>
-            `).join('');
+                `;
+            }).join('');
+            
+            // Inicializar índices de imágenes
+            services.forEach(service => {
+                if (!window.imageIndices) window.imageIndices = {};
+                window.imageIndices[service.id] = 0;
+            });
         }
 
         // Render videos
@@ -715,6 +759,56 @@
         // Initialize
         renderServices();
         renderVideos();
+
+        // Funciones para navegar por las imágenes
+        window.changeImage = (serviceId, direction) => {
+            const service = services.find(s => s.id === serviceId);
+            const imageArray = service.images || [service.image];
+            
+            if (imageArray.length <= 1) return;
+            
+            const currentIndex = window.imageIndices[serviceId];
+            let newIndex = currentIndex + direction;
+            
+            if (newIndex < 0) newIndex = imageArray.length - 1;
+            if (newIndex >= imageArray.length) newIndex = 0;
+            
+            window.imageIndices[serviceId] = newIndex;
+            updateImageDisplay(serviceId, newIndex);
+        };
+
+        window.setImage = (serviceId, index) => {
+            window.imageIndices[serviceId] = index;
+            updateImageDisplay(serviceId, index);
+        };
+
+        function updateImageDisplay(serviceId, activeIndex) {
+            const gallery = document.querySelector(`[data-service-id="${serviceId}"]`);
+            if (!gallery) return;
+            
+            const images = gallery.querySelectorAll('.gallery-image');
+            const dots = gallery.parentElement.querySelectorAll('.image-dot');
+            
+            images.forEach((img, index) => {
+                if (index === activeIndex) {
+                    img.classList.remove('opacity-0');
+                    img.classList.add('opacity-100');
+                } else {
+                    img.classList.remove('opacity-100');
+                    img.classList.add('opacity-0');
+                }
+            });
+            
+            dots.forEach((dot, index) => {
+                if (index === activeIndex) {
+                    dot.classList.add('bg-white', 'w-6');
+                    dot.classList.remove('bg-white/60', 'w-2');
+                } else {
+                    dot.classList.remove('bg-white', 'w-6');
+                    dot.classList.add('bg-white/60', 'w-2');
+                }
+            });
+        }
 
         // Filter functionality
         const categoryButtons = document.querySelectorAll('.category-filter');
@@ -781,24 +875,185 @@
             const service = services.find(s => s.id === serviceId);
             if (!service) return;
 
-            document.getElementById('modalImage').src = service.image;
-            document.getElementById('modalIcon').textContent = service.icon;
-            document.getElementById('modalTitle').textContent = service.title;
-            document.getElementById('modalPrice').textContent = service.price;
-            document.getElementById('modalDescription').textContent = service.description;
-            document.getElementById('modalBenefits').textContent = service.benefits;
+            const imageArray = service.images || [service.image];
+            const hasMultipleImages = imageArray.length > 1;
 
-            const featuresList = document.getElementById('modalFeatures');
-            featuresList.innerHTML = service.features.map(feature => 
-                `<li class="flex items-start gap-2">
-                    <span class="material-icons-round text-green-500 text-sm mt-0.5">check</span>
-                    <span class="text-slate-600 text-sm">${feature}</span>
-                </li>`
-            ).join('');
+            // Crear galería de imágenes para el modal
+            const modalImageHTML = hasMultipleImages ? `
+                <div class="relative h-80">
+                    <div class="modal-image-gallery relative w-full h-full" data-modal-service-id="${service.id}">
+                        ${imageArray.map((img, index) => `
+                            <img 
+                                class="modal-gallery-image absolute inset-0 w-full h-full object-contain bg-slate-50 transition-opacity duration-300 ${index === 0 ? 'opacity-100' : 'opacity-0'}"
+                                src="${img}"
+                                alt="${service.title}"
+                                data-index="${index}"
+                            />
+                        `).join('')}
+                    </div>
+                    
+                    <!-- Navegación -->
+                    <button 
+                        onclick="changeModalImage(${service.id}, -1)"
+                        class="absolute left-4 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-white/90 backdrop-blur-sm flex items-center justify-center hover:bg-white transition-all shadow-lg z-10"
+                    >
+                        <span class="material-icons-round text-slate-900">chevron_left</span>
+                    </button>
+                    <button 
+                        onclick="changeModalImage(${service.id}, 1)"
+                        class="absolute right-4 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-white/90 backdrop-blur-sm flex items-center justify-center hover:bg-white transition-all shadow-lg z-10"
+                    >
+                        <span class="material-icons-round text-slate-900">chevron_right</span>
+                    </button>
+                    
+                    <!-- Indicadores -->
+                    <div class="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2 z-10">
+                        ${imageArray.map((_, index) => `
+                            <button 
+                                onclick="setModalImage(${service.id}, ${index})"
+                                class="modal-image-dot w-2.5 h-2.5 rounded-full transition-all ${index === 0 ? 'bg-white w-8' : 'bg-white/60'}"
+                                data-modal-dot-index="${index}"
+                            ></button>
+                        `).join('')}
+                    </div>
+                    
+                    <!-- Contador -->
+                    <div class="absolute top-4 right-4">
+                        <span class="px-3 py-1.5 rounded-full bg-black/60 backdrop-blur-sm text-sm text-white font-medium">
+                            <span id="modalImageCounter">1</span> / ${imageArray.length}
+                        </span>
+                    </div>
+                    
+                    <button 
+                        onclick="closeServiceModal()"
+                        class="absolute top-4 left-4 w-10 h-10 rounded-full bg-white/90 backdrop-blur-sm flex items-center justify-center hover:bg-white transition-colors"
+                    >
+                        <span class="material-icons-round text-slate-900">close</span>
+                    </button>
+                </div>
+            ` : `
+                <div class="relative h-80 bg-slate-50">
+                    <img class="w-full h-full object-contain" src="${imageArray[0]}" alt="${service.title}"/>
+                    <button 
+                        onclick="closeServiceModal()"
+                        class="absolute top-4 right-4 w-10 h-10 rounded-full bg-white/90 backdrop-blur-sm flex items-center justify-center hover:bg-white transition-colors"
+                    >
+                        <span class="material-icons-round text-slate-900">close</span>
+                    </button>
+                </div>
+            `;
+
+            document.querySelector('#serviceModal > div > div').innerHTML = modalImageHTML + `
+                <div class="p-8">
+                    <div class="flex items-center gap-2 mb-4">
+                        <span class="material-symbols-outlined text-3xl text-primary">${service.icon}</span>
+                        <h2 class="text-3xl font-bold text-slate-900">${service.title}</h2>
+                    </div>
+                    <p class="text-2xl font-bold text-primary mb-6 text-center">${service.price}</p>
+                    <p class="text-slate-600 mb-6 leading-relaxed">${service.description}</p>
+                    
+                    <div class="mb-6">
+                        <h3 class="font-bold text-slate-900 mb-3 flex items-center gap-2">
+                            <span class="material-icons-round text-primary">check_circle</span>
+                            Características
+                        </h3>
+                        <ul class="space-y-2">
+                            ${service.features.map(feature => `
+                                <li class="flex items-start gap-2">
+                                    <span class="material-icons-round text-green-500 text-sm mt-0.5">check</span>
+                                    <span class="text-slate-600 text-sm">${feature}</span>
+                                </li>
+                            `).join('')}
+                        </ul>
+                    </div>
+
+                    <div class="bg-blue-50 rounded-2xl p-6 mb-6">
+                        <h3 class="font-bold text-slate-900 mb-2 flex items-center gap-2">
+                            <span class="material-icons-round text-primary">star</span>
+                            Beneficio Principal
+                        </h3>
+                        <p class="text-slate-700">${service.benefits}</p>
+                    </div>
+
+                    <div class="flex gap-4">
+                        <button 
+                            onclick="document.getElementById('contactModal').classList.remove('hidden'); closeServiceModal();"
+                            class="flex-1 bg-primary text-white py-3 rounded-xl font-bold hover:bg-blue-600 transition-colors"
+                        >
+                            Solicitar Cotización
+                        </button>
+                        <button 
+                            onclick="closeServiceModal()"
+                            class="px-6 py-3 rounded-xl border border-slate-200 font-bold hover:bg-slate-50 transition-colors"
+                        >
+                            Cerrar
+                        </button>
+                    </div>
+                </div>
+            `;
+
+            // Inicializar índice del modal
+            if (!window.modalImageIndices) window.modalImageIndices = {};
+            window.modalImageIndices[service.id] = 0;
 
             document.getElementById('serviceModal').classList.remove('hidden');
             document.body.style.overflow = 'hidden';
         };
+
+        // Funciones para navegar imágenes en el modal
+        window.changeModalImage = (serviceId, direction) => {
+            const service = services.find(s => s.id === serviceId);
+            const imageArray = service.images || [service.image];
+            
+            if (imageArray.length <= 1) return;
+            
+            const currentIndex = window.modalImageIndices[serviceId];
+            let newIndex = currentIndex + direction;
+            
+            if (newIndex < 0) newIndex = imageArray.length - 1;
+            if (newIndex >= imageArray.length) newIndex = 0;
+            
+            window.modalImageIndices[serviceId] = newIndex;
+            updateModalImageDisplay(serviceId, newIndex);
+        };
+
+        window.setModalImage = (serviceId, index) => {
+            window.modalImageIndices[serviceId] = index;
+            updateModalImageDisplay(serviceId, index);
+        };
+
+        function updateModalImageDisplay(serviceId, activeIndex) {
+            const gallery = document.querySelector(`[data-modal-service-id="${serviceId}"]`);
+            if (!gallery) return;
+            
+            const images = gallery.querySelectorAll('.modal-gallery-image');
+            const dots = document.querySelectorAll('.modal-image-dot');
+            const counter = document.getElementById('modalImageCounter');
+            
+            images.forEach((img, index) => {
+                if (index === activeIndex) {
+                    img.classList.remove('opacity-0');
+                    img.classList.add('opacity-100');
+                } else {
+                    img.classList.remove('opacity-100');
+                    img.classList.add('opacity-0');
+                }
+            });
+            
+            dots.forEach((dot, index) => {
+                if (index === activeIndex) {
+                    dot.classList.add('bg-white', 'w-8');
+                    dot.classList.remove('bg-white/60', 'w-2.5');
+                } else {
+                    dot.classList.remove('bg-white', 'w-8');
+                    dot.classList.add('bg-white/60', 'w-2.5');
+                }
+            });
+            
+            if (counter) {
+                counter.textContent = activeIndex + 1;
+            }
+        }
 
         window.closeServiceModal = () => {
             document.getElementById('serviceModal').classList.add('hidden');
