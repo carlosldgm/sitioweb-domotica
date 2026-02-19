@@ -1,0 +1,859 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Smart Solutions - Catálogo de Domótica 2024</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+    <script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#2b6cee",
+                        "surface": "#ffffff",
+                        "background": "#f8fafc",
+                    },
+                    fontFamily: {
+                        "display": ["Space Grotesk", "sans-serif"]
+                    },
+                    boxShadow: {
+                        'soft': '0 4px 20px -2px rgba(0, 0, 0, 0.05), 0 2px 10px -2px rgba(0, 0, 0, 0.03)',
+                    }
+                },
+            },
+        }
+    </script>
+    <style type="text/tailwindcss">
+        @layer base {
+            body {
+                @apply bg-background font-display text-slate-900 antialiased;
+            }
+        }
+        .card-hover:hover {
+            transform: translateY(-4px);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .video-overlay:hover .play-button {
+            transform: scale(1.1);
+            background-color: #2b6cee;
+            color: white;
+        }
+    </style>
+</head>
+<body class="min-h-screen">
+    <!-- Header -->
+    <header class="sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b border-slate-200">
+        <div class="max-w-[1440px] mx-auto px-8 h-20 flex items-center justify-between">
+            <div class="flex items-center gap-8">
+                <!-- Logo de la empresa -->
+                <div class="flex items-center gap-3">
+                    <!-- OPCIÓN A: Solo logo (descomenta esta línea y comenta las de abajo) -->
+                    <!-- <img src="imagenes/logo.png" alt="Logo" class="h-12 w-auto"> -->
+                    
+                    <!-- OPCIÓN B: Logo + Texto (RECOMENDADO) -->
+                    <!-- Descomenta estas 2 líneas para usar logo + texto -->
+                    <!-- <img src="imagenes/logo.png" alt="Logo" class="h-10 w-auto"> -->
+                    <div>
+                        <p class="text-[10px] uppercase tracking-[0.2em] text-primary font-bold">Catálogo 2024</p>
+                        <h1 class="text-2xl font-bold tracking-tight text-slate-900">Smart Solutions</h1>
+                    </div>
+                    
+                    <!-- OPCIÓN C: Solo texto (ACTUAL - Sin logo) -->
+                    <!-- Ya está activo arriba -->
+                </div>
+                <div class="hidden md:flex items-center bg-slate-100 rounded-full px-4 py-2 w-96">
+                    <span class="material-icons-round text-slate-400 text-xl">search</span>
+                    <input 
+                        id="searchInput"
+                        class="bg-transparent border-none focus:ring-0 text-sm w-full placeholder:text-slate-400" 
+                        placeholder="Buscar servicios inteligentes..." 
+                        type="text"
+                    />
+                </div>
+            </div>
+            <div class="flex items-center gap-6">
+                <button class="flex items-center gap-2 text-sm font-semibold text-slate-600 hover:text-primary transition-colors">
+                    <span class="material-icons-round text-xl">help_outline</span>
+                    Soporte
+                </button>
+                <button 
+                    onclick="document.getElementById('contactModal').classList.remove('hidden')"
+                    class="bg-primary text-white px-6 py-2.5 rounded-full text-sm font-bold shadow-lg shadow-primary/20 hover:bg-blue-600 transition-all"
+                >
+                    Contactar Experto
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <div class="max-w-[1440px] mx-auto flex gap-8 px-8 py-10">
+        <!-- Sidebar -->
+        <aside class="w-64 flex-shrink-0 sticky top-32 h-fit">
+            <div class="space-y-8">
+                <div>
+                    <h3 class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-4">Categorías</h3>
+                    <nav class="space-y-1">
+                        <button 
+                            data-category="all"
+                            class="category-filter w-full flex items-center justify-between px-4 py-3 rounded-xl bg-primary text-white font-bold group"
+                        >
+                            <span class="flex items-center gap-3">
+                                <span class="material-symbols-outlined text-xl">grid_view</span>
+                                Todas las Soluciones
+                            </span>
+                            <span class="text-xs bg-white/20 px-2 py-0.5 rounded">14</span>
+                        </button>
+                        <button 
+                            data-category="Lighting"
+                            class="category-filter w-full flex items-center justify-between px-4 py-3 rounded-xl text-slate-600 hover:bg-white hover:shadow-soft transition-all group"
+                        >
+                            <span class="flex items-center gap-3">
+                                <span class="material-symbols-outlined text-xl">lightbulb</span>
+                                Iluminación
+                            </span>
+                        </button>
+                        <button 
+                            data-category="Seguridad"
+                            class="category-filter w-full flex items-center justify-between px-4 py-3 rounded-xl text-slate-600 hover:bg-white hover:shadow-soft transition-all group"
+                        >
+                            <span class="flex items-center gap-3">
+                                <span class="material-symbols-outlined text-xl">shield</span>
+                                Seguridad
+                            </span>
+                        </button>
+                        <button 
+                            data-category="Climatización"
+                            class="category-filter w-full flex items-center justify-between px-4 py-3 rounded-xl text-slate-600 hover:bg-white hover:shadow-soft transition-all group"
+                        >
+                            <span class="flex items-center gap-3">
+                                <span class="material-symbols-outlined text-xl">thermostat</span>
+                                Clima
+                            </span>
+                        </button>
+                        <button 
+                            data-category="Entretención"
+                            class="category-filter w-full flex items-center justify-between px-4 py-3 rounded-xl text-slate-600 hover:bg-white hover:shadow-soft transition-all group"
+                        >
+                            <span class="flex items-center gap-3">
+                                <span class="material-symbols-outlined text-xl">tv</span>
+                                Entretenimiento
+                            </span>
+                        </button>
+                    </nav>
+                </div>
+
+                <div class="p-6 rounded-2xl bg-slate-900 text-white relative overflow-hidden">
+                    <div class="relative z-10">
+                        <h4 class="font-bold mb-2">¿Necesitas un plan personalizado?</h4>
+                        <p class="text-xs text-slate-400 mb-4">Nuestros diseñadores pueden ayudarte a crear la configuración perfecta.</p>
+                        <button 
+                            onclick="document.getElementById('contactModal').classList.remove('hidden')"
+                            class="w-full py-2 bg-white text-slate-900 rounded-lg text-xs font-bold hover:bg-slate-100 transition-colors"
+                        >
+                            Solicitar Cotización
+                        </button>
+                    </div>
+                    <div class="absolute -right-4 -bottom-4 opacity-20">
+                        <span class="material-icons-round text-7xl">auto_awesome</span>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="flex-1">
+            <!-- Services Grid -->
+            <section class="mb-20">
+                <div class="flex items-center justify-between mb-8">
+                    <div>
+                        <h2 class="text-2xl font-bold text-slate-900">Catálogo de Servicios Premium</h2>
+                        <p class="text-sm text-slate-500 mt-1">Soluciones de automatización profesional para tu hogar inteligente</p>
+                    </div>
+                </div>
+
+                <div id="servicesGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <!-- Los servicios se cargarán aquí con JavaScript -->
+                </div>
+
+                <div id="noResults" class="hidden text-center py-20">
+                    <span class="material-icons-round text-6xl text-slate-300 mb-4">search_off</span>
+                    <h3 class="text-xl font-bold text-slate-900 mb-2">No se encontraron resultados</h3>
+                    <p class="text-slate-500">Intenta con otros términos de búsqueda o categoría</p>
+                </div>
+            </section>
+
+            <!-- Video Gallery -->
+            <section class="mb-20">
+                <div class="flex items-center justify-between mb-8">
+                    <div>
+                        <h2 class="text-2xl font-bold text-slate-900">Galería de Proyectos Destacados</h2>
+                        <p class="text-sm text-slate-500 mt-1">Descubre nuestras soluciones inteligentes en acción</p>
+                    </div>
+                </div>
+
+                <div id="videoGallery" class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <!-- Los videos se cargarán aquí con JavaScript -->
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Service Detail Modal -->
+    <div id="serviceModal" class="hidden fixed inset-0 z-50 overflow-y-auto bg-slate-900/50 backdrop-blur-sm">
+        <div class="min-h-screen px-4 flex items-center justify-center">
+            <div class="bg-white rounded-3xl max-w-3xl w-full shadow-2xl overflow-hidden">
+                <div class="relative h-80">
+                    <img id="modalImage" class="w-full h-full object-cover" src="" alt=""/>
+                    <button 
+                        onclick="closeServiceModal()"
+                        class="absolute top-4 right-4 w-10 h-10 rounded-full bg-white/90 backdrop-blur-sm flex items-center justify-center hover:bg-white transition-colors"
+                    >
+                        <span class="material-icons-round text-slate-900">close</span>
+                    </button>
+                </div>
+                <div class="p-8">
+                    <div class="flex items-center gap-2 mb-4">
+                        <span id="modalIcon" class="material-symbols-outlined text-3xl text-primary"></span>
+                        <h2 id="modalTitle" class="text-3xl font-bold text-slate-900"></h2>
+                    </div>
+                    <p id="modalPrice" class="text-2xl font-bold text-primary mb-6"></p>
+                    <p id="modalDescription" class="text-slate-600 mb-6 leading-relaxed"></p>
+                    
+                    <div class="mb-6">
+                        <h3 class="font-bold text-slate-900 mb-3 flex items-center gap-2">
+                            <span class="material-icons-round text-primary">check_circle</span>
+                            Características
+                        </h3>
+                        <ul id="modalFeatures" class="space-y-2"></ul>
+                    </div>
+
+                    <div class="bg-blue-50 rounded-2xl p-6 mb-6">
+                        <h3 class="font-bold text-slate-900 mb-2 flex items-center gap-2">
+                            <span class="material-icons-round text-primary">star</span>
+                            Beneficio Principal
+                        </h3>
+                        <p id="modalBenefits" class="text-slate-700"></p>
+                    </div>
+
+                    <div class="flex gap-4">
+                        <button 
+                            onclick="document.getElementById('contactModal').classList.remove('hidden'); closeServiceModal();"
+                            class="flex-1 bg-primary text-white py-3 rounded-xl font-bold hover:bg-blue-600 transition-colors"
+                        >
+                            Solicitar Cotización
+                        </button>
+                        <button 
+                            onclick="closeServiceModal()"
+                            class="px-6 py-3 rounded-xl border border-slate-200 font-bold hover:bg-slate-50 transition-colors"
+                        >
+                            Cerrar
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Video Modal -->
+    <div id="videoModal" class="hidden fixed inset-0 z-50 overflow-y-auto bg-slate-900/90 backdrop-blur-sm">
+        <div class="min-h-screen px-4 flex items-center justify-center">
+            <div class="bg-white rounded-3xl max-w-5xl w-full shadow-2xl overflow-hidden">
+                <div class="relative">
+                    <button 
+                        onclick="closeVideoModal()"
+                        class="absolute top-4 right-4 z-10 w-10 h-10 rounded-full bg-white/90 backdrop-blur-sm flex items-center justify-center hover:bg-white transition-colors"
+                    >
+                        <span class="material-icons-round text-slate-900">close</span>
+                    </button>
+                    <div class="aspect-video">
+                        <iframe 
+                            id="videoFrame"
+                            class="w-full h-full"
+                            src=""
+                            frameborder="0"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                            allowfullscreen
+                        ></iframe>
+                    </div>
+                </div>
+                <div class="p-6">
+                    <h3 id="videoTitle" class="text-xl font-bold text-slate-900"></h3>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Contact Modal -->
+    <div id="contactModal" class="hidden fixed inset-0 z-50 overflow-y-auto bg-slate-900/50 backdrop-blur-sm">
+        <div class="min-h-screen px-4 flex items-center justify-center">
+            <div class="bg-white rounded-3xl max-w-md w-full shadow-2xl p-8">
+                <!-- Logo en el modal (opcional) -->
+                <!-- Descomenta para mostrar logo en el modal -->
+                <!-- <div class="flex justify-center mb-4">
+                    <img src="imagenes/logo.png" alt="Logo" class="h-16 w-auto">
+                </div> -->
+                
+                <div class="flex items-center justify-between mb-6">
+                    <h2 class="text-2xl font-bold text-slate-900">Contactar Experto</h2>
+                    <button 
+                        onclick="document.getElementById('contactModal').classList.add('hidden')"
+                        class="w-10 h-10 rounded-full hover:bg-slate-100 flex items-center justify-center transition-colors"
+                    >
+                        <span class="material-icons-round text-slate-900">close</span>
+                    </button>
+                </div>
+
+                <div class="space-y-4">
+                    <a 
+                        href="tel:+56912345678"
+                        class="flex items-center gap-4 p-4 rounded-xl border border-slate-200 hover:border-primary hover:bg-blue-50 transition-all group"
+                    >
+                        <div class="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center group-hover:bg-primary group-hover:text-white transition-colors">
+                            <span class="material-icons-round text-primary group-hover:text-white">phone</span>
+                        </div>
+                        <div>
+                            <div class="font-bold text-slate-900">Teléfono</div>
+                            <div class="text-sm text-slate-500">+56 9 1234 5678</div>
+                        </div>
+                    </a>
+
+                    <a href="/cdn-cgi/l/email-protection#bcdfd3d2c8dddfc8d3fccfd1ddcec8cfd3d0c9c8d5d3d2cf92dfd0" class="flex items-center gap-4 p-4 rounded-xl border border-slate-200 hover:border-primary hover:bg-blue-50 transition-all group">
+                        <div class="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center group-hover:bg-primary group-hover:text-white transition-colors">
+                            <span class="material-icons-round text-primary group-hover:text-white">email</span>
+                        </div>
+                        <div>
+                            <div class="font-bold text-slate-900">Email</div>
+                            <div class="text-sm text-slate-500"><span class="__cf_email__" data-cfemail="51323e3f253032253e11223c302325223e3d2425383e3f227f323d">[email&#160;protected]</span></div>
+                        </div>
+                    </a>
+
+                    <a 
+                        href="https://wa.me/56912345678"
+                        target="_blank"
+                        class="flex items-center gap-4 p-4 rounded-xl border border-slate-200 hover:border-green-500 hover:bg-green-50 transition-all group"
+                    >
+                        <div class="w-12 h-12 rounded-full bg-green-100 flex items-center justify-center group-hover:bg-green-500 transition-colors">
+                            <span class="material-icons-round text-green-600 group-hover:text-white">chat</span>
+                        </div>
+                        <div>
+                            <div class="font-bold text-slate-900">WhatsApp</div>
+                            <div class="text-sm text-slate-500">Chatea con nosotros</div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scroll to Top Button -->
+    <button 
+        id="scrollTopBtn"
+        onclick="window.scrollTo({top: 0, behavior: 'smooth'})"
+        class="fixed bottom-8 right-8 w-12 h-12 rounded-full bg-white shadow-soft border border-slate-200 flex items-center justify-center text-slate-400 hover:text-primary transition-colors opacity-0 pointer-events-none"
+    >
+        <span class="material-icons-round">expand_less</span>
+    </button>
+
+    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+        // Data
+        const services = [
+            {
+                id: 1,
+                title: "Control de Luces y Enchufes",
+                category: "Iluminación",
+                icon: "lightbulb",
+                image: "imagenes/enchufes_int_modelo_clasico.webp?w=600&h=400&fit=crop&q=80",
+                description: "Controla todas las luces y dispositivos de tu hogar desde tu smartphone o con comandos de voz.",
+                features: [
+                    "Control remoto desde cualquier lugar",
+                    "Programación de horarios automáticos",
+                    "Ahorro energético inteligente hasta 40%",
+                    "Compatible con todas las marcas principales"
+                ],
+                benefits: "Reduce tu consumo eléctrico y aumenta la comodidad con automatizaciones inteligentes.",
+                price: "-"
+            },
+            {
+                id: 2,
+                title: "Asistentes Virtuales",
+                category: "Asistentes",
+                icon: "mic",
+                image: "imagenes/alexa-google home.jpeg?w=800&h=600&fit=crop&q=80",
+                description: "Instalación y configuración profesional de Alexa y Google Home para controlar tu hogar por voz.",
+                features: [
+                    "Configuración completa de dispositivos",
+                    "Integración con todos tus aparatos",
+                    "Creación de rutinas personalizadas",
+                    "Soporte técnico incluido por 3 meses"
+                ],
+                benefits: "Controla tu hogar con tu voz. Crea escenas como 'Buenos días' que encienden luces y preparan el café.",
+                price: "-"
+            },
+            {
+                id: 3,
+                title: "Cerraduras Inteligentes",
+                category: "Seguridad",
+                icon: "lock",
+                image: "imagenes/cerradura-inteligente-con-huella.jpg?w=800&h=600&fit=crop&q=80",
+                description: "Acceso seguro y sin llaves a tu hogar con tecnología de cerradura inteligente de última generación.",
+                features: [
+                    "Apertura con smartphone, código o huella",
+                    "Registro completo de accesos",
+                    "Códigos temporales para invitados",
+                    "Alertas de seguridad en tiempo real"
+                ],
+                benefits: "Olvídate de las llaves. Controla quién entra y cuándo con total seguridad.",
+                price: "-"
+            },
+            {
+                id: 4,
+                title: "Home Assistant Central",
+                category: "Entretención",
+                icon: "hub",
+                image: "imagenes/raspberry-pi-5-4.webp?w=800&h=600&fit=crop&q=80",
+                description: "Sistema de automatización central con Raspberry Pi. Control total y personalizado de tu hogar inteligente.",
+                features: [
+                    "Hub central con Raspberry Pi 4/5",
+                    "Instalación de Home Assistant OS",
+                    "Configuraciones personalizadas avanzadas",
+                    "Integración de todos los dispositivos"
+                ],
+                benefits: "El cerebro de tu casa inteligente. Automatizaciones avanzadas sin depender de la nube.",
+                price: "-"
+            },
+            {
+                id: 5,
+                title: "Control de Portones WiFi",
+                category: "Seguridad",
+                icon: "garage",
+                image: "imagenes/porton-garage.avif?w=800&h=600&fit=crop&q=80",
+                description: "Abre y cierra tu portón desde tu smartphone o automáticamente al llegar a casa con geolocalización.",
+                features: [
+                    "Apertura remota desde cualquier lugar",
+                    "Automatización por geolocalización GPS",
+                    "Integración con asistentes de voz",
+                    "Registro y notificaciones de aperturas"
+                ],
+                benefits: "Llegaste a casa y el portón se abre solo. Nunca más esperes bajo la lluvia.",
+                price: "-"
+            },
+            {
+                id: 6,
+                title: "Iluminación LED COB",
+                category: "Iluminación",
+                icon: "light_mode",
+                image: "imagenes/leds-cob.avif?w=800&h=600&fit=crop&q=80",
+                description: "Instalación de tiras LED COB de alta calidad con control automático y personalizable de colores.",
+                features: [
+                    "Iluminación uniforme sin puntos LED",
+                    "16 millones de colores RGB disponibles",
+                    "Automatización por horarios y eventos",
+                    "Sincronización con música en tiempo real"
+                ],
+                benefits: "Crea ambientes únicos con iluminación de alta gama. Ideal para sala, cocina y dormitorios.",
+                price: "-"
+            },
+            {
+                id: 7,
+                title: "Control Infrarrojo Universal",
+                category: "Entretención",
+                icon: "settings_remote",
+                image: "imagenes/smart-ir-remote.avif?w=800&h=600&fit=crop&q=80",
+                description: "Controla todos tus dispositivos IR (TV, AC, ventiladores) desde una sola app o por comandos de voz.",
+                features: [
+                    "Control de aires acondicionados",
+                    "TVs, decodificadores y audio",
+                    "Integración total con asistentes",
+                    "Rutinas automatizadas inteligentes"
+                ],
+                benefits: "Un solo control para todo. Automatiza tu AC para que se apague cuando sales de casa.",
+                price: "-"
+            },
+            {
+                id: 8,
+                title: "Sensores de Clima",
+                category: "Climatización",
+                icon: "thermostat",
+                image: "imagenes/termostato-wifi.avif?w=800&h=600&fit=crop&q=80",
+                description: "Monitoreo de temperatura y humedad en tiempo real con automatizaciones inteligentes de climatización.",
+                features: [
+                    "Datos precisos de temperatura y humedad",
+                    "Automatización de aire acondicionado",
+                    "Alertas personalizadas por condiciones",
+                    "Historial completo de datos climáticos"
+                ],
+                benefits: "Mantén el clima perfecto. El AC se enciende automáticamente si la temperatura sube de 25°C.",
+                price: "-"
+            },
+            {
+                id: 9,
+                title: "Cámaras Inteligentes con IA",
+                category: "Seguridad",
+                icon: "videocam",
+                image: "imagenes/camara-ext-ia.jpg?w=800&h=600&fit=crop&q=80",
+                description: "Sistemas de vigilancia inteligentes con detección de personas, animales, vehículos y automatizaciones.",
+                features: [
+                    "Detección inteligente con IA avanzada",
+                    "Notificaciones instantáneas filtradas",
+                    "Grabación en nube o almacenamiento local",
+                    "Automatizaciones por eventos detectados"
+                ],
+                benefits: "Solo recibe alertas importantes. La IA distingue entre personas, mascotas y movimientos.",
+                price: "-"
+            },
+            {
+                id: 10,
+                title: "Sensores de Presencia PIR",
+                category: "Lighting",
+                icon: "sensors",
+                image: "imagenes/sensor-presencia.avif?w=800&h=600&fit=crop&q=80",
+                description: "Detección de movimiento para automatizar luces, seguridad y climatización con máxima eficiencia.",
+                features: [
+                    "Encendido automático de luces",
+                    "Ahorro energético hasta 60%",
+                    "Integración con sistema de seguridad",
+                    "Instalación inalámbrica sin obras"
+                ],
+                benefits: "Las luces se encienden cuando entras y se apagan cuando sales. Automático y eficiente.",
+                price: "-"
+            },
+            {
+                id: 11,
+                title: "Enchufes Inteligentes",
+                category: "Lighting",
+                icon: "power",
+                image: "imagenes/enchufe-int.avif?w=800&h=600&fit=crop&q=80",
+                description: "Soporte para múltiples marcas y tipos de enchufes inteligentes con configuración óptima.",
+                features: [
+                    "Compatible con Tuya, Tasmota, Shelly",
+                    "Medición de consumo eléctrico en tiempo real",
+                    "Programación horaria avanzada",
+                    "Control grupal de múltiples enchufes"
+                ],
+                benefits: "Convierte cualquier aparato en inteligente. Monitorea y controla el consumo energético.",
+                price: "-"
+            },
+            {
+                id: 12,
+                title: "Botones Digitales",
+                category: "Entretención",
+                icon: "radio_button_checked",
+                image: "imagenes/boton-int.avif?w=800&h=600&fit=crop&q=80",
+                description: "Botones inalámbricos programables para activar escenas complejas y controlar múltiples dispositivos.",
+                features: [
+                    "Instalación inalámbrica sin cables",
+                    "Múltiples acciones configurables por botón",
+                    "Activación de escenas complejas",
+                    "Diseño elegante y discreto minimalista"
+                ],
+                benefits: "Un botón para 'Modo Cine': apaga luces, cierra cortinas, enciende TV y proyector.",
+                price: "-"
+            },
+            {
+                id: 13,
+                title: "Sensores de Apertura",
+                category: "Seguridad",
+                icon: "door_sensor",
+                image: "https://images.unsplash.com/photo-1563013544-824ae1b704d3?w=800&h=600&fit=crop&q=80",
+                description: "Monitoreo de puertas y ventanas con alertas de seguridad instantáneas y automatizaciones inteligentes.",
+                features: [
+                    "Alertas instantáneas de apertura",
+                    "Automatización de luces y climatización",
+                    "Integración con sistema de alarma",
+                    "Batería de ultra larga duración (2 años)"
+                ],
+                benefits: "Recibe alertas si alguien abre una puerta. Automatiza el AC para apagarse con ventanas abiertas.",
+                price: "-"
+            },
+            {
+                id: 14,
+                title: "Detectores de Humo",
+                category: "Seguridad",
+                icon: "smoke_detector",
+                image: "https://images.unsplash.com/photo-1584438784894-089d6a62b8fa?w=800&h=600&fit=crop&q=80",
+                description: "Sensores inteligentes de humo e incendio con alertas inmediatas a tu smartphone y sirena potente.",
+                features: [
+                    "Detección temprana de humo e incendios",
+                    "Notificaciones instantáneas críticas",
+                    "Integración con sistema de alarma central",
+                    "Pruebas automáticas periódicas mensuales"
+                ],
+                benefits: "Protección 24/7. Alertas incluso cuando no estás en casa para actuar rápido.",
+                price: "-"
+            }
+        ];
+
+        const videos = [
+            {
+                id: 1,
+                title: "Casa Inteligente Completa",
+                description: "Transformación completa de una vivienda con control total de luces, climatización y seguridad mediante Home Assistant.",
+                thumbnail: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800&h=600&fit=crop&q=80",
+                duration: "5:24",
+                videoUrl: "https://www.youtube.com/embed/3Xpd2fFWWVg"
+            },
+            {
+                id: 2,
+                title: "Iluminación LED Inteligente",
+                description: "Instalación de tiras LED COB con sincronización de colores y control por voz. Efectos dinámicos y automatizaciones.",
+                thumbnail: "https://images.unsplash.com/photo-1513506003901-1e6a229e2d15?w=800&h=600&fit=crop&q=80",
+                duration: "3:45",
+                videoUrl: "https://www.youtube.com/embed/LXb3EKWsInQ"
+            },
+            {
+                id: 3,
+                title: "Sistema de Seguridad con IA",
+                description: "Cámaras inteligentes con detección de personas y automatizaciones. Notificaciones instantáneas en tiempo real.",
+                thumbnail: "https://images.unsplash.com/photo-1557324232-b8917d3c3dcb?w=800&h=600&fit=crop&q=80",
+                duration: "4:12",
+                videoUrl: "https://www.youtube.com/embed/Y6693gFbHsM"
+            },
+            {
+                id: 4,
+                title: "Control de Portón Automático",
+                description: "Apertura automática del portón al llegar a casa usando geolocalización. Control total desde el smartphone.",
+                thumbnail: "https://images.unsplash.com/photo-1582407947304-fd86f028f716?w=800&h=600&fit=crop&q=80",
+                duration: "2:58",
+                videoUrl: "https://www.youtube.com/embed/2KXdIwGBpIU"
+            },
+            {
+                id: 5,
+                title: "Automatización con Alexa y Google Home",
+                description: "Demostración de rutinas de voz personalizadas: 'Alexa, buenos días' activa luces, noticias y cafetera.",
+                thumbnail: "https://images.unsplash.com/photo-1518444065439-e933c06ce9cd?w=800&h=600&fit=crop&q=80",
+                duration: "3:30",
+                videoUrl: "https://www.youtube.com/embed/PSm4hGN4ZNc"
+            },
+            {
+                id: 6,
+                title: "Sensores y Automatizaciones Avanzadas",
+                description: "Sistema inteligente que detecta presencia y ajusta luces, temperatura y persianas automáticamente.",
+                thumbnail: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800&h=600&fit=crop&q=80",
+                duration: "4:45",
+                videoUrl: "https://www.youtube.com/embed/wOq7BIJ6ItM"
+            }
+        ];
+
+        // Render services
+        function renderServices() {
+            const grid = document.getElementById('servicesGrid');
+            grid.innerHTML = services.map(service => `
+                <div 
+                    class="service-card bg-white rounded-2xl overflow-hidden shadow-soft border border-slate-100 card-hover group flex flex-col"
+                    data-category="${service.category}"
+                    data-title="${service.title.toLowerCase()}"
+                    data-description="${service.description.toLowerCase()}"
+                >
+                    <div class="h-56 relative overflow-hidden">
+                        <img 
+                            alt="${service.title}"
+                            class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                            src="${service.image}"
+                        />
+                        <div class="absolute top-4 left-4">
+                            <span class="px-2.5 py-1 rounded-full bg-white/90 backdrop-blur-sm text-[10px] font-bold uppercase text-slate-900 shadow-sm">
+                                ${service.category}
+                            </span>
+                        </div>
+                    </div>
+                    <div class="p-5 flex flex-col flex-1">
+                        <h3 class="text-lg font-bold mb-2">${service.title}</h3>
+                        <p class="text-xs text-slate-500 mb-4 leading-relaxed line-clamp-2">
+                            ${service.description}
+                        </p>
+                        <div class="mt-auto">
+                            <div class="text-primary font-bold text-lg mb-3">${service.price}</div>
+                            <button 
+                                onclick="openServiceModal(${service.id})"
+                                class="w-full py-2.5 rounded-xl border border-slate-200 text-sm font-bold text-slate-900 hover:bg-slate-50 transition-colors uppercase tracking-wider"
+                            >
+                                Ver Detalles
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Render videos
+        function renderVideos() {
+            const gallery = document.getElementById('videoGallery');
+            gallery.innerHTML = videos.map(video => `
+                <div class="group cursor-pointer" onclick="openVideoModal('${video.videoUrl}', '${video.title}')">
+                    <div class="relative aspect-video rounded-2xl overflow-hidden shadow-soft border border-slate-100 mb-4 video-overlay">
+                        <img 
+                            alt="${video.title}"
+                            class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                            src="${video.thumbnail}"
+                        />
+                        <div class="absolute inset-0 bg-slate-900/20 group-hover:bg-slate-900/40 transition-colors flex items-center justify-center">
+                            <div class="play-button w-14 h-14 rounded-full bg-white/90 backdrop-blur-sm flex items-center justify-center text-primary shadow-xl transition-all duration-300">
+                                <span class="material-icons-round text-3xl ml-1">play_arrow</span>
+                            </div>
+                        </div>
+                        <div class="absolute bottom-4 right-4">
+                            <span class="px-2 py-1 rounded bg-black/50 backdrop-blur-md text-[10px] text-white font-medium">
+                                ${video.duration}
+                            </span>
+                        </div>
+                    </div>
+                    <h3 class="font-bold text-slate-900 mb-1 group-hover:text-primary transition-colors">
+                        ${video.title}
+                    </h3>
+                    <p class="text-xs text-slate-500 leading-relaxed">
+                        ${video.description}
+                    </p>
+                </div>
+            `).join('');
+        }
+
+        // Initialize
+        renderServices();
+        renderVideos();
+
+        // Filter functionality
+        const categoryButtons = document.querySelectorAll('.category-filter');
+        const serviceCards = document.querySelectorAll('.service-card');
+        const searchInput = document.getElementById('searchInput');
+        const noResults = document.getElementById('noResults');
+        const servicesGrid = document.getElementById('servicesGrid');
+
+        let currentCategory = 'all';
+        let currentSearch = '';
+
+        categoryButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                categoryButtons.forEach(btn => {
+                    btn.classList.remove('bg-primary', 'text-white');
+                    btn.classList.add('text-slate-600');
+                });
+                button.classList.add('bg-primary', 'text-white');
+                button.classList.remove('text-slate-600');
+
+                currentCategory = button.dataset.category;
+                filterServices();
+            });
+        });
+
+        searchInput.addEventListener('input', (e) => {
+            currentSearch = e.target.value.toLowerCase();
+            filterServices();
+        });
+
+        function filterServices() {
+            const serviceCards = document.querySelectorAll('.service-card');
+            let visibleCount = 0;
+
+            serviceCards.forEach(card => {
+                const category = card.dataset.category;
+                const title = card.dataset.title;
+                const description = card.dataset.description;
+
+                const matchesCategory = currentCategory === 'all' || category === currentCategory;
+                const matchesSearch = currentSearch === '' || 
+                    title.includes(currentSearch) || 
+                    description.includes(currentSearch);
+
+                if (matchesCategory && matchesSearch) {
+                    card.classList.remove('hidden');
+                    visibleCount++;
+                } else {
+                    card.classList.add('hidden');
+                }
+            });
+
+            if (visibleCount === 0) {
+                noResults.classList.remove('hidden');
+                servicesGrid.classList.add('hidden');
+            } else {
+                noResults.classList.add('hidden');
+                servicesGrid.classList.remove('hidden');
+            }
+        }
+
+        // Service Modal
+        window.openServiceModal = (serviceId) => {
+            const service = services.find(s => s.id === serviceId);
+            if (!service) return;
+
+            document.getElementById('modalImage').src = service.image;
+            document.getElementById('modalIcon').textContent = service.icon;
+            document.getElementById('modalTitle').textContent = service.title;
+            document.getElementById('modalPrice').textContent = service.price;
+            document.getElementById('modalDescription').textContent = service.description;
+            document.getElementById('modalBenefits').textContent = service.benefits;
+
+            const featuresList = document.getElementById('modalFeatures');
+            featuresList.innerHTML = service.features.map(feature => 
+                `<li class="flex items-start gap-2">
+                    <span class="material-icons-round text-green-500 text-sm mt-0.5">check</span>
+                    <span class="text-slate-600 text-sm">${feature}</span>
+                </li>`
+            ).join('');
+
+            document.getElementById('serviceModal').classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+        };
+
+        window.closeServiceModal = () => {
+            document.getElementById('serviceModal').classList.add('hidden');
+            document.body.style.overflow = 'auto';
+        };
+
+        // Video Modal
+        window.openVideoModal = (videoUrl, title) => {
+            document.getElementById('videoFrame').src = videoUrl + '?autoplay=1';
+            document.getElementById('videoTitle').textContent = title;
+            document.getElementById('videoModal').classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+        };
+
+        window.closeVideoModal = () => {
+            document.getElementById('videoFrame').src = '';
+            document.getElementById('videoModal').classList.add('hidden');
+            document.body.style.overflow = 'auto';
+        };
+
+        // Close modals on outside click
+        document.getElementById('serviceModal').addEventListener('click', (e) => {
+            if (e.target.id === 'serviceModal') closeServiceModal();
+        });
+
+        document.getElementById('videoModal').addEventListener('click', (e) => {
+            if (e.target.id === 'videoModal') closeVideoModal();
+        });
+
+        document.getElementById('contactModal').addEventListener('click', (e) => {
+            if (e.target.id === 'contactModal') {
+                document.getElementById('contactModal').classList.add('hidden');
+            }
+        });
+
+        // Scroll to top button
+        const scrollTopBtn = document.getElementById('scrollTopBtn');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 300) {
+                scrollTopBtn.classList.remove('opacity-0', 'pointer-events-none');
+                scrollTopBtn.classList.add('opacity-100');
+            } else {
+                scrollTopBtn.classList.add('opacity-0', 'pointer-events-none');
+                scrollTopBtn.classList.remove('opacity-100');
+            }
+        });
+
+        // Close modals with Escape key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                closeServiceModal();
+                closeVideoModal();
+                document.getElementById('contactModal').classList.add('hidden');
+            }
+        });
+    </script>
+</body>
+</html>
