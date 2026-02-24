@@ -43,6 +43,26 @@
             background-color: #2b6cee;
             color: white;
         }
+        
+        /* Fix para filtros - evitar que el texto desaparezca */
+        .category-filter.bg-primary,
+        .category-filter.bg-primary:hover {
+            color: white !important;
+            background-color: #2b6cee !important;
+        }
+        
+        .mobile-category-filter.bg-primary,
+        .mobile-category-filter.bg-primary:hover {
+            color: white !important;
+            background-color: #2b6cee !important;
+            border-color: #2b6cee !important;
+        }
+        
+        /* Asegurar que los íconos también mantengan el color */
+        .category-filter.bg-primary .material-symbols-outlined,
+        .category-filter.bg-primary:hover .material-symbols-outlined {
+            color: white !important;
+        }
     </style>
 </head>
 <body class="min-h-screen">
@@ -53,14 +73,14 @@
                 <!-- Logo de la empresa -->
                 <div class="flex items-center gap-3">
                     <!-- OPCIÓN A: Solo logo (descomenta esta línea y comenta las de abajo) -->
-                    <!-- <img src="imagenes/logo.png" alt="Logo" class="h-8 md:h-12 w-auto"> -->
+                    <!--<img src="imagenes/domoticahogarchile-logo.png" alt="Logo" class="h-8 md:h-12 w-auto">-->
                     
                     <!-- OPCIÓN B: Logo + Texto (RECOMENDADO) -->
-                    <!-- Descomenta estas 2 líneas para usar logo + texto -->
-                    <!-- <img src="imagenes/logo.png" alt="Logo" class="h-8 md:h-10 w-auto"> -->
+                    <!--Descomenta estas 2 líneas para usar logo + texto -->
+                    <img src="imagenes/domoticahogarchile-logo.png" alt="Logo" class="h-16 md:h-20 w-auto"> 
                     <div>
                         <p class="text-[8px] md:text-[10px] uppercase tracking-[0.2em] text-primary font-bold">Catálogo 2024</p>
-                        <h1 class="text-lg md:text-2xl font-bold tracking-tight text-slate-900">Smart Solutions</h1>
+                        <h1 class="text-lg md:text-2xl font-bold tracking-tight text-slate-900">Domotica Hogar Chile</h1>
                     </div>
                     
                     <!-- OPCIÓN C: Solo texto (ACTUAL - Sin logo) -->
@@ -237,6 +257,52 @@
                 </div>
             </section>
 
+            <!-- Kits y Paquetes en Oferta -->
+            <section class="mb-20">
+                <div class="text-center mb-12">
+                    <span class="inline-block px-4 py-1.5 rounded-full bg-gradient-to-r from-orange-100 to-red-100 text-orange-700 text-sm font-bold mb-4">
+                        🔥 OFERTAS ESPECIALES
+                    </span>
+                    <h2 class="text-3xl md:text-4xl font-bold text-slate-900 mb-3">Kits y Paquetes</h2>
+                    <p class="text-lg text-slate-600 max-w-2xl mx-auto">
+                        Comienza tu casa inteligente con nuestros paquetes especiales. 
+                        <span class="text-primary font-semibold">Ahorra hasta 28%</span> vs comprar por separado.
+                    </p>
+                    <p class="text-sm text-slate-500 mt-2">
+                        💡 Incluye instalación profesional + Visita técnica GRATIS
+                    </p>
+                </div>
+
+                <div id="kitsGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+                    <!-- Los kits se cargarán aquí con JavaScript -->
+                </div>
+
+                <!-- Nota sobre visitas -->
+                <div class="mt-12 p-6 md:p-8 rounded-2xl bg-gradient-to-br from-blue-50 to-indigo-50 border border-blue-100">
+                    <div class="flex flex-col md:flex-row items-start md:items-center gap-4">
+                        <div class="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
+                            <span class="material-icons-round text-primary text-2xl">verified</span>
+                        </div>
+                        <div class="flex-1">
+                            <h3 class="text-xl font-bold text-slate-900 mb-2">¿Necesitas más que un kit?</h3>
+                            <p class="text-slate-600 mb-3">
+                                Al contratar un kit, la <strong>visita técnica es GRATIS</strong>. Durante la visita puedes agregar más productos 
+                                con <strong>descuento del 15%</strong> vs precio individual.
+                            </p>
+                            <p class="text-sm text-slate-500">
+                                ⚠️ Nota: Visitas sin compra de kit tienen un costo de <strong>$25.000</strong> (reembolsable con compra sobre $150.000)
+                            </p>
+                        </div>
+                        <button 
+                            onclick="document.getElementById('contactModal').classList.remove('hidden')"
+                            class="bg-primary text-white px-6 py-3 rounded-xl font-bold hover:bg-blue-600 transition-all shadow-lg whitespace-nowrap"
+                        >
+                            Consultar Ahora
+                        </button>
+                    </div>
+                </div>
+            </section>
+
             <!-- Video Gallery -->
             <section class="mb-20">
                 <div class="flex items-center justify-between mb-8">
@@ -331,7 +397,7 @@
                         </div>
                         <div>
                             <div class="font-bold text-slate-900">Email</div>
-                            <div class="text-sm text-slate-500"><span class="__cf_email__" data-cfemail="51323e3f253032253e11223c302325223e3d2425383e3f227f323d">[<span class="__cf_email__" data-cfemail="98fbf9eaf4f7ebf4fcfff5d8fff5f9f1f4b6fbf7f5">[email&#160;protected]</span>]</span></div>
+                            <div class="text-sm text-slate-500"><span class="__cf_email__" data-cfemail="51323e3f253032253e11223c302325223e3d2425383e3f227f323d">[<span class="__cf_email__" data-cfemail="98fbf9eaf4f7ebf4fcfff5d8fff5f9f1f4b6fbf7f5"><span class="__cf_email__" data-cfemail="d6b2b9bbb9a2bfb5b7beb9b1b7a4b5bebfbab396b1bbb7bfbaf8b5b9bb">[email&#160;protected]</span></span>]</span></div>
                         </div>
                     </a>
 
@@ -353,6 +419,15 @@
         </div>
     </div>
 
+    <!-- Kit Modal -->
+    <div id="kitModal" class="hidden fixed inset-0 z-50 overflow-y-auto bg-slate-900/50 backdrop-blur-sm">
+        <div class="min-h-screen px-4 py-8 flex items-center justify-center">
+            <div class="modal-content bg-white rounded-3xl max-w-4xl w-full shadow-2xl overflow-hidden">
+                <!-- El contenido se generará dinámicamente -->
+            </div>
+        </div>
+    </div>
+
     <!-- Scroll to Top Button -->
     <button 
         id="scrollTopBtn"
@@ -362,7 +437,7 @@
         <span class="material-icons-round">expand_less</span>
     </button>
 
-    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
         // Data
         const services = [
             {
@@ -627,6 +702,122 @@
             }
         ];
 
+        // Kits y Paquetes
+        const kits = [
+            {
+                id: 1,
+                title: "Kit Inicio Básico",
+                badge: "🏠 Popular",
+                image: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800&h=600&fit=crop&q=80",
+                description: "Perfecto para comenzar tu casa inteligente. Controla tus luces con la voz.",
+                includes: [
+                    "1 Amazon Echo Dot (Alexa)",
+                    "2 Ampolletas inteligentes RGB",
+                    "1 Interruptor inteligente",
+                    "Instalación y configuración completa"
+                ],
+                priceRegular: "$180.000",
+                priceOffer: "$129.990",
+                discount: "28%",
+                savings: "$50.010",
+                popular: true
+            },
+            {
+                id: 2,
+                title: "Kit Seguridad Inteligente",
+                badge: "🔐 Oferta",
+                image: "https://images.unsplash.com/photo-1558002038-bb4237b54708?w=800&h=600&fit=crop&q=80",
+                description: "Protege tu hogar con tecnología inteligente y monitoreo desde tu celular.",
+                includes: [
+                    "1 Cerradura digital con huella",
+                    "2 Sensores de apertura (puertas/ventanas)",
+                    "1 Cámara WiFi con IA",
+                    "1 Sensor de movimiento",
+                    "Instalación profesional"
+                ],
+                priceRegular: "$350.000",
+                priceOffer: "$279.990",
+                discount: "20%",
+                savings: "$70.010"
+            },
+            {
+                id: 3,
+                title: "Kit Iluminación Premium",
+                badge: "💡 Nuevo",
+                image: "https://images.unsplash.com/photo-1513506003901-1e6a229e2d15?w=800&h=600&fit=crop&q=80",
+                description: "Transforma tus espacios con iluminación inteligente de colores.",
+                includes: [
+                    "5 Ampolletas RGB inteligentes",
+                    "2 Tiras LED COB de 3 metros",
+                    "1 Google Home Mini",
+                    "3 Interruptores inteligentes",
+                    "Configuración y sincronización"
+                ],
+                priceRegular: "$280.000",
+                priceOffer: "$219.990",
+                discount: "21%",
+                savings: "$60.010"
+            },
+            {
+                id: 4,
+                title: "Kit Casa Completa",
+                badge: "⭐ Premium",
+                image: "https://images.unsplash.com/photo-1597733336794-12d05021d510?w=800&h=600&fit=crop&q=80",
+                description: "La solución completa para convertir tu casa en un hogar inteligente.",
+                includes: [
+                    "1 Hub Home Assistant (Raspberry Pi)",
+                    "1 Amazon Echo Show",
+                    "4 Ampolletas inteligentes",
+                    "2 Enchufes inteligentes",
+                    "1 Sensor de temperatura",
+                    "2 Sensores de movimiento",
+                    "1 Tira LED COB 5 metros",
+                    "Instalación y configuración total"
+                ],
+                priceRegular: "$520.000",
+                priceOffer: "$399.990",
+                discount: "23%",
+                savings: "$120.010",
+                featured: true
+            },
+            {
+                id: 5,
+                title: "Kit Confort Climático",
+                badge: "🌡️ Ahorro",
+                image: "https://images.unsplash.com/photo-1545259741-2ea3ebf61fa3?w=800&h=600&fit=crop&q=80",
+                description: "Mantén el clima perfecto y ahorra en electricidad con automatización inteligente.",
+                includes: [
+                    "2 Sensores temperatura/humedad",
+                    "1 Control IR universal (AC/TV)",
+                    "2 Enchufes con medición consumo",
+                    "1 Alexa Echo Dot",
+                    "Rutinas de ahorro energético"
+                ],
+                priceRegular: "$190.000",
+                priceOffer: "$149.990",
+                discount: "21%",
+                savings: "$40.010"
+            },
+            {
+                id: 6,
+                title: "Kit Entretenimiento Smart",
+                badge: "📺 Oferta",
+                image: "https://images.unsplash.com/photo-1558346490-a72e53ae2d4f?w=800&h=600&fit=crop&q=80",
+                description: "Controla todo tu entretenimiento con comandos de voz y automatizaciones.",
+                includes: [
+                    "1 Control IR universal",
+                    "1 Google Chromecast",
+                    "2 Tiras LED para TV",
+                    "1 Alexa Echo Dot",
+                    "Escenas predefinidas (Modo Cine, etc.)"
+                ],
+                priceRegular: "$170.000",
+                priceOffer: "$129.990",
+                discount: "24%",
+                savings: "$40.010"
+            }
+        ];
+
         const videos = [
             {
                 id: 1,
@@ -806,8 +997,73 @@
             `).join('');
         }
 
+        // Render kits
+        function renderKits() {
+            const grid = document.getElementById('kitsGrid');
+            grid.innerHTML = kits.map(kit => `
+                <div class="bg-white rounded-2xl overflow-hidden shadow-soft border border-slate-100 hover:shadow-xl transition-all duration-300 flex flex-col ${kit.featured ? 'ring-2 ring-primary' : ''}">
+                    ${kit.featured ? `
+                        <div class="bg-gradient-to-r from-primary to-blue-600 text-white text-center py-2 text-sm font-bold">
+                            ⭐ MÁS COMPLETO
+                        </div>
+                    ` : ''}
+                    
+                    <div class="relative h-48 overflow-hidden">
+                        <img 
+                            src="${kit.image}" 
+                            alt="${kit.title}"
+                            class="w-full h-full object-cover"
+                        />
+                        <div class="absolute top-3 left-3">
+                            <span class="px-3 py-1 rounded-full bg-white/95 backdrop-blur-sm text-xs font-bold text-slate-900 shadow-md">
+                                ${kit.badge}
+                            </span>
+                        </div>
+                        <div class="absolute top-3 right-3">
+                            <span class="px-3 py-1.5 rounded-full bg-red-500 text-white text-xs font-bold shadow-lg">
+                                -${kit.discount} OFF
+                            </span>
+                        </div>
+                    </div>
+                    
+                    <div class="p-6 flex flex-col flex-1">
+                        <h3 class="text-xl font-bold text-slate-900 mb-2">${kit.title}</h3>
+                        <p class="text-sm text-slate-600 mb-4">${kit.description}</p>
+                        
+                        <div class="mb-4">
+                            <p class="text-xs font-semibold text-slate-700 mb-2 uppercase tracking-wide">✓ Incluye:</p>
+                            <ul class="space-y-1.5">
+                                ${kit.includes.map(item => `
+                                    <li class="text-sm text-slate-600 flex items-start gap-2">
+                                        <span class="text-green-500 mt-0.5">✓</span>
+                                        <span>${item}</span>
+                                    </li>
+                                `).join('')}
+                            </ul>
+                        </div>
+                        
+                        <div class="mt-auto pt-4 border-t border-slate-100">
+                            <div class="flex items-baseline gap-2 mb-1">
+                                <span class="text-sm text-slate-400 line-through">${kit.priceRegular}</span>
+                                <span class="text-xs text-green-600 font-semibold">Ahorras ${kit.savings}</span>
+                            </div>
+                            <div class="text-3xl font-bold text-primary mb-4">${kit.priceOffer}</div>
+                            
+                            <button 
+                                onclick="openKitModal(${kit.id})"
+                                class="w-full py-3 rounded-xl bg-gradient-to-r from-primary to-blue-600 text-white font-bold hover:shadow-lg transition-all"
+                            >
+                                Ver Oferta Completa
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
         // Initialize
         renderServices();
+        renderKits();
         renderVideos();
 
         // Funciones para navegar por las imágenes
@@ -1185,6 +1441,136 @@
             document.body.style.overflow = 'auto';
         };
 
+        // Kit Modal
+        window.openKitModal = (kitId) => {
+            const kit = kits.find(k => k.id === kitId);
+            if (!kit) return;
+
+            const modalContent = `
+                <div class="relative">
+                    <img src="${kit.image}" alt="${kit.title}" class="w-full h-64 object-cover"/>
+                    <button 
+                        onclick="closeKitModal()"
+                        class="absolute top-4 right-4 w-10 h-10 rounded-full bg-white/90 backdrop-blur-sm flex items-center justify-center hover:bg-white transition-colors shadow-lg"
+                    >
+                        <span class="material-icons-round text-slate-900">close</span>
+                    </button>
+                    ${kit.featured ? `
+                        <div class="absolute top-4 left-4 px-4 py-2 rounded-full bg-gradient-to-r from-primary to-blue-600 text-white font-bold shadow-lg">
+                            ⭐ KIT MÁS COMPLETO
+                        </div>
+                    ` : `
+                        <div class="absolute top-4 left-4 px-4 py-2 rounded-full bg-white/95 backdrop-blur-sm font-bold shadow-lg">
+                            ${kit.badge}
+                        </div>
+                    `}
+                    <div class="absolute bottom-4 right-4 px-4 py-2 rounded-full bg-red-500 text-white font-bold shadow-lg text-lg">
+                        -${kit.discount} DESCUENTO
+                    </div>
+                </div>
+                <div class="p-8">
+                    <h2 class="text-3xl font-bold text-slate-900 mb-4">${kit.title}</h2>
+                    
+                    <div class="grid md:grid-cols-2 gap-8 mb-6">
+                        <div>
+                            <h3 class="font-bold text-slate-900 mb-3 flex items-center gap-2">
+                                <span class="material-icons-round text-primary">inventory_2</span>
+                                ¿Qué incluye este kit?
+                            </h3>
+                            <ul class="space-y-2">
+                                ${kit.includes.map(item => `
+                                    <li class="flex items-start gap-2">
+                                        <span class="material-icons-round text-green-500 text-sm mt-0.5">check_circle</span>
+                                        <span class="text-slate-600 text-sm">${item}</span>
+                                    </li>
+                                `).join('')}
+                            </ul>
+                        </div>
+                        
+                        <div>
+                            <h3 class="font-bold text-slate-900 mb-3 flex items-center gap-2">
+                                <span class="material-icons-round text-primary">star</span>
+                                Beneficios adicionales
+                            </h3>
+                            <ul class="space-y-2 text-sm">
+                                <li class="flex items-start gap-2">
+                                    <span class="text-green-500">✓</span>
+                                    <span class="text-slate-600">Visita técnica e instalación GRATIS</span>
+                                </li>
+                                <li class="flex items-start gap-2">
+                                    <span class="text-green-500">✓</span>
+                                    <span class="text-slate-600">Configuración completa incluida</span>
+                                </li>
+                                <li class="flex items-start gap-2">
+                                    <span class="text-green-500">✓</span>
+                                    <span class="text-slate-600">Garantía de 12 meses</span>
+                                </li>
+                                <li class="flex items-start gap-2">
+                                    <span class="text-green-500">✓</span>
+                                    <span class="text-slate-600">Soporte técnico por 3 meses</span>
+                                </li>
+                                <li class="flex items-start gap-2">
+                                    <span class="text-green-500">✓</span>
+                                    <span class="text-slate-600">15% desc. en productos adicionales</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="bg-gradient-to-r from-orange-50 to-red-50 rounded-2xl p-6 mb-6">
+                        <div class="flex items-center justify-between flex-wrap gap-4">
+                            <div>
+                                <p class="text-sm text-slate-600 mb-1">Precio Regular</p>
+                                <p class="text-2xl text-slate-400 line-through">${kit.priceRegular}</p>
+                            </div>
+                            <div class="text-center">
+                                <p class="text-sm text-green-600 font-semibold mb-1">Ahorras</p>
+                                <p class="text-2xl font-bold text-green-600">${kit.savings}</p>
+                            </div>
+                            <div class="text-right">
+                                <p class="text-sm text-slate-600 mb-1">Precio Oferta</p>
+                                <p class="text-4xl font-bold text-primary">${kit.priceOffer}</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <p class="text-slate-600 mb-6 leading-relaxed">
+                        ${kit.description} Este kit incluye todo lo necesario para comenzar, 
+                        con instalación profesional y configuración completa.
+                    </p>
+
+                    <div class="flex gap-4">
+                        <button 
+                            onclick="document.getElementById('contactModal').classList.remove('hidden'); closeKitModal();"
+                            class="flex-1 bg-gradient-to-r from-primary to-blue-600 text-white py-4 rounded-xl font-bold text-lg hover:shadow-xl transition-all"
+                        >
+                            🎉 Solicitar Este Kit
+                        </button>
+                        <button 
+                            onclick="closeKitModal()"
+                            class="px-6 py-4 rounded-xl border-2 border-slate-200 font-bold hover:bg-slate-50 transition-colors"
+                        >
+                            Cerrar
+                        </button>
+                    </div>
+
+                    <p class="text-xs text-center text-slate-500 mt-4">
+                        💬 También puedes consultar por WhatsApp o llamarnos directamente
+                    </p>
+                </div>
+            `;
+
+            const modal = document.getElementById('kitModal');
+            modal.querySelector('.modal-content').innerHTML = modalContent;
+            modal.classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+        };
+
+        window.closeKitModal = () => {
+            document.getElementById('kitModal').classList.add('hidden');
+            document.body.style.overflow = 'auto';
+        };
+
         // Close modals on outside click
         document.getElementById('serviceModal').addEventListener('click', (e) => {
             if (e.target.id === 'serviceModal') closeServiceModal();
@@ -1197,6 +1583,12 @@
         document.getElementById('contactModal').addEventListener('click', (e) => {
             if (e.target.id === 'contactModal') {
                 document.getElementById('contactModal').classList.add('hidden');
+            }
+        });
+
+        document.getElementById('kitModal').addEventListener('click', (e) => {
+            if (e.target.id === 'kitModal') {
+                closeKitModal();
             }
         });
 
@@ -1214,9 +1606,9 @@
 
         // Close modals with Escape key
         document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape') {
-                closeServiceModal();
+            if (e.key === 'Escape') {                closeServiceModal();
                 closeVideoModal();
+                closeKitModal();
                 document.getElementById('contactModal').classList.add('hidden');
             }
         });
