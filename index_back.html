@@ -48,19 +48,19 @@
 <body class="min-h-screen">
     <!-- Header -->
     <header class="sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b border-slate-200">
-        <div class="max-w-[1440px] mx-auto px-8 h-20 flex items-center justify-between">
-            <div class="flex items-center gap-8">
+        <div class="max-w-[1440px] mx-auto px-4 md:px-8 h-16 md:h-20 flex items-center justify-between">
+            <div class="flex items-center gap-4 md:gap-8">
                 <!-- Logo de la empresa -->
                 <div class="flex items-center gap-3">
                     <!-- OPCIÓN A: Solo logo (descomenta esta línea y comenta las de abajo) -->
-                    <!-- <img src="imagenes/logo.png" alt="Logo" class="h-12 w-auto"> -->
+                    <!-- <img src="imagenes/logo.png" alt="Logo" class="h-8 md:h-12 w-auto"> -->
                     
                     <!-- OPCIÓN B: Logo + Texto (RECOMENDADO) -->
                     <!-- Descomenta estas 2 líneas para usar logo + texto -->
-                    <!-- <img src="imagenes/logo.png" alt="Logo" class="h-10 w-auto"> -->
+                    <!-- <img src="imagenes/logo.png" alt="Logo" class="h-8 md:h-10 w-auto"> -->
                     <div>
-                        <p class="text-[10px] uppercase tracking-[0.2em] text-primary font-bold">Catálogo 2024</p>
-                        <h1 class="text-2xl font-bold tracking-tight text-slate-900">Smart Solutions</h1>
+                        <p class="text-[8px] md:text-[10px] uppercase tracking-[0.2em] text-primary font-bold">Catálogo 2024</p>
+                        <h1 class="text-lg md:text-2xl font-bold tracking-tight text-slate-900">Smart Solutions</h1>
                     </div>
                     
                     <!-- OPCIÓN C: Solo texto (ACTUAL - Sin logo) -->
@@ -76,24 +76,38 @@
                     />
                 </div>
             </div>
-            <div class="flex items-center gap-6">
-                <button class="flex items-center gap-2 text-sm font-semibold text-slate-600 hover:text-primary transition-colors">
+            <div class="flex items-center gap-2 md:gap-6">
+                <button class="hidden md:flex items-center gap-2 text-sm font-semibold text-slate-600 hover:text-primary transition-colors">
                     <span class="material-icons-round text-xl">help_outline</span>
                     Soporte
                 </button>
                 <button 
                     onclick="document.getElementById('contactModal').classList.remove('hidden')"
-                    class="bg-primary text-white px-6 py-2.5 rounded-full text-sm font-bold shadow-lg shadow-primary/20 hover:bg-blue-600 transition-all"
+                    class="bg-primary text-white px-4 md:px-6 py-2 md:py-2.5 rounded-full text-xs md:text-sm font-bold shadow-lg shadow-primary/20 hover:bg-blue-600 transition-all"
                 >
-                    Contactar Experto
+                    <span class="hidden md:inline">Contactar Experto</span>
+                    <span class="md:hidden">Contacto</span>
                 </button>
+            </div>
+        </div>
+        
+        <!-- Barra de búsqueda móvil -->
+        <div class="md:hidden px-4 pb-3">
+            <div class="flex items-center bg-slate-100 rounded-full px-4 py-2 w-full">
+                <span class="material-icons-round text-slate-400 text-lg">search</span>
+                <input 
+                    id="searchInputMobile"
+                    class="bg-transparent border-none focus:ring-0 text-sm w-full placeholder:text-slate-400" 
+                    placeholder="Buscar servicios..." 
+                    type="text"
+                />
             </div>
         </div>
     </header>
 
-    <div class="max-w-[1440px] mx-auto flex gap-8 px-8 py-10">
-        <!-- Sidebar -->
-        <aside class="w-64 flex-shrink-0 sticky top-32 h-fit">
+    <div class="max-w-[1440px] mx-auto flex gap-8 px-4 md:px-8 py-10">
+        <!-- Sidebar (oculto en móvil, visible en desktop) -->
+        <aside id="sidebar" class="hidden lg:block w-64 flex-shrink-0 sticky top-32 h-fit">
             <div class="space-y-8">
                 <div>
                     <h3 class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-4">Categorías</h3>
@@ -166,7 +180,43 @@
         </aside>
 
         <!-- Main Content -->
-        <main class="flex-1">
+        <main class="flex-1 w-full">
+            <!-- Filtros móviles (chips horizontales) -->
+            <div class="lg:hidden mb-6 overflow-x-auto pb-2 -mx-4 px-4">
+                <div class="flex gap-2 min-w-max">
+                    <button 
+                        data-category="all"
+                        class="mobile-category-filter px-4 py-2 rounded-full bg-primary text-white text-sm font-bold whitespace-nowrap shadow-md"
+                    >
+                        Todas (14)
+                    </button>
+                    <button 
+                        data-category="Lighting"
+                        class="mobile-category-filter px-4 py-2 rounded-full bg-white text-slate-700 text-sm font-semibold whitespace-nowrap border border-slate-200 hover:border-primary hover:text-primary transition-all"
+                    >
+                        💡 Iluminación
+                    </button>
+                    <button 
+                        data-category="Security"
+                        class="mobile-category-filter px-4 py-2 rounded-full bg-white text-slate-700 text-sm font-semibold whitespace-nowrap border border-slate-200 hover:border-primary hover:text-primary transition-all"
+                    >
+                        🔐 Seguridad
+                    </button>
+                    <button 
+                        data-category="Climate"
+                        class="mobile-category-filter px-4 py-2 rounded-full bg-white text-slate-700 text-sm font-semibold whitespace-nowrap border border-slate-200 hover:border-primary hover:text-primary transition-all"
+                    >
+                        🌡️ Clima
+                    </button>
+                    <button 
+                        data-category="Entertainment"
+                        class="mobile-category-filter px-4 py-2 rounded-full bg-white text-slate-700 text-sm font-semibold whitespace-nowrap border border-slate-200 hover:border-primary hover:text-primary transition-all"
+                    >
+                        📺 Entretenimiento
+                    </button>
+                </div>
+            </div>
+
             <!-- Services Grid -->
             <section class="mb-20">
                 <div class="flex items-center justify-between mb-8">
@@ -176,7 +226,7 @@
                     </div>
                 </div>
 
-                <div id="servicesGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div id="servicesGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-4 md:gap-8">
                     <!-- Los servicios se cargarán aquí con JavaScript -->
                 </div>
 
@@ -196,7 +246,7 @@
                     </div>
                 </div>
 
-                <div id="videoGallery" class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div id="videoGallery" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
                     <!-- Los videos se cargarán aquí con JavaScript -->
                 </div>
             </section>
@@ -281,7 +331,7 @@
                         </div>
                         <div>
                             <div class="font-bold text-slate-900">Email</div>
-                            <div class="text-sm text-slate-500"><span class="__cf_email__" data-cfemail="51323e3f253032253e11223c302325223e3d2425383e3f227f323d">[carlosldgm@gmail.com]</span></div>
+                            <div class="text-sm text-slate-500"><span class="__cf_email__" data-cfemail="51323e3f253032253e11223c302325223e3d2425383e3f227f323d">[<span class="__cf_email__" data-cfemail="98fbf9eaf4f7ebf4fcfff5d8fff5f9f1f4b6fbf7f5">domoticahogarchile@gmail.com</span>]</span></div>
                         </div>
                     </a>
 
@@ -312,7 +362,7 @@
         <span class="material-icons-round">expand_less</span>
     </button>
 
-    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
         // Data
         const services = [
             {
@@ -580,12 +630,12 @@
         const videos = [
             {
                 id: 1,
-                title: "Casa Inteligente Completa",
-                description: "Transformación completa de una vivienda con control total de luces, climatización y seguridad mediante Home Assistant.",
-                thumbnail: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800&h=600&fit=crop&q=80",
-                duration: "5:24",
-                videoUrl: "https://www.youtube.com/embed/3Xpd2fFWWVg"
-            },
+                title: "Control ampolletas inteligentes con Alexa",
+                description: "Demostración de rutinas de voz personalizadas: 'Alexa, buenos días' activa luces, noticias y cafetera.",
+                thumbnail: "imagenes/ampolleta_int_alexa.avif",
+                duration: "3:30",
+                videoUrl: "videos/amp-int_alexa.mp4"
+            },            
             {
                 id: 2,
                 title: "Iluminación LED Inteligente",
@@ -612,11 +662,11 @@
             },
             {
                 id: 5,
-                title: "Control ampolletas inteligentes con Alexa",
-                description: "Demostración de rutinas de voz personalizadas: 'Alexa, buenos días' activa luces, noticias y cafetera.",
-                thumbnail: "imagenes/ampolleta_int_alexa.avif",
-                duration: "3:30",
-                videoUrl: "videos/amp-int_alexa.mp4"
+                title: "Casa Inteligente Completa",
+                description: "Transformación completa de una vivienda con control total de luces, climatización y seguridad mediante Home Assistant.",
+                thumbnail: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800&h=600&fit=crop&q=80",
+                duration: "5:24",
+                videoUrl: "https://www.youtube.com/embed/3Xpd2fFWWVg"
             },
             {
                 id: 6,
@@ -812,14 +862,17 @@
 
         // Filter functionality
         const categoryButtons = document.querySelectorAll('.category-filter');
+        const mobileCategoryButtons = document.querySelectorAll('.mobile-category-filter');
         const serviceCards = document.querySelectorAll('.service-card');
         const searchInput = document.getElementById('searchInput');
+        const searchInputMobile = document.getElementById('searchInputMobile');
         const noResults = document.getElementById('noResults');
         const servicesGrid = document.getElementById('servicesGrid');
 
         let currentCategory = 'all';
         let currentSearch = '';
 
+        // Desktop category filters
         categoryButtons.forEach(button => {
             button.addEventListener('click', () => {
                 categoryButtons.forEach(btn => {
@@ -830,14 +883,72 @@
                 button.classList.remove('text-slate-600');
 
                 currentCategory = button.dataset.category;
+                
+                // Sync mobile filters
+                syncMobileFilters(currentCategory);
+                
                 filterServices();
             });
         });
 
+        // Mobile category filters
+        mobileCategoryButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                mobileCategoryButtons.forEach(btn => {
+                    btn.classList.remove('bg-primary', 'text-white', 'shadow-md');
+                    btn.classList.add('bg-white', 'text-slate-700', 'border', 'border-slate-200');
+                });
+                button.classList.add('bg-primary', 'text-white', 'shadow-md');
+                button.classList.remove('bg-white', 'text-slate-700', 'border', 'border-slate-200');
+
+                currentCategory = button.dataset.category;
+                
+                // Sync desktop filters
+                syncDesktopFilters(currentCategory);
+                
+                filterServices();
+            });
+        });
+
+        function syncMobileFilters(category) {
+            mobileCategoryButtons.forEach(btn => {
+                if (btn.dataset.category === category) {
+                    btn.classList.add('bg-primary', 'text-white', 'shadow-md');
+                    btn.classList.remove('bg-white', 'text-slate-700', 'border', 'border-slate-200');
+                } else {
+                    btn.classList.remove('bg-primary', 'text-white', 'shadow-md');
+                    btn.classList.add('bg-white', 'text-slate-700', 'border', 'border-slate-200');
+                }
+            });
+        }
+
+        function syncDesktopFilters(category) {
+            categoryButtons.forEach(btn => {
+                if (btn.dataset.category === category) {
+                    btn.classList.add('bg-primary', 'text-white');
+                    btn.classList.remove('text-slate-600');
+                } else {
+                    btn.classList.remove('bg-primary', 'text-white');
+                    btn.classList.add('text-slate-600');
+                }
+            });
+        }
+
+        // Search functionality (desktop)
         searchInput.addEventListener('input', (e) => {
             currentSearch = e.target.value.toLowerCase();
+            if (searchInputMobile) searchInputMobile.value = e.target.value;
             filterServices();
         });
+
+        // Search functionality (mobile)
+        if (searchInputMobile) {
+            searchInputMobile.addEventListener('input', (e) => {
+                currentSearch = e.target.value.toLowerCase();
+                searchInput.value = e.target.value;
+                filterServices();
+            });
+        }
 
         function filterServices() {
             const serviceCards = document.querySelectorAll('.service-card');
