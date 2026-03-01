@@ -541,6 +541,7 @@
                 category: "Lighting",
                 icon: "light_mode",
                 images: [
+                    "imagenes/living_cob.webp?w=800&h=600&fit=crop&q=80",
                     "imagenes/leds-cob.avif?w=800&h=600&fit=crop&q=80",
                 ],
                 description: "Instalación de tiras LED COB de alta calidad con control automático y personalizable de colores.",
@@ -822,53 +823,64 @@
         const videos = [
             {
                 id: 1,
-                title: "Control ampolletas inteligentes con Alexa",
+                title: "Proyecto Ñuñoa - Control de interruptores y ampolletas inteligentes con Alexa",
                 description: "Demostración de rutinas de voz personalizadas: 'Alexa, buenos días' activa luces, noticias y cafetera.",
-                thumbnail: "imagenes/ampolleta_int_alexa.avif",
-                duration: "3:30",
-                videoUrl: "videos/amp-int_alexa.mp4"
+                thumbnail: "imagenes/proyecto-tita.jpg",
+                videos: [
+                    { url: "videos/pieza_tita.mp4", title: "Ampolleta Inteligente Alexa", duration: "3:30" },
+                    { url: "videos/acceso.mp4", title: "Interruptor Inteligente Alexa", duration: "3:30" },
+                    { url: "videos/living_comedor_terraza.mp4", title: "Interruptores Inteligentes Alexa", duration: "3:30" }
+                ]
             },            
             {
                 id: 2,
                 title: "Iluminación LED Inteligente",
                 description: "Instalación de tiras LED COB con sincronización de colores y control por voz. Efectos dinámicos y automatizaciones.",
                 thumbnail: "https://images.unsplash.com/photo-1513506003901-1e6a229e2d15?w=800&h=600&fit=crop&q=80",
-                duration: "3:45",
-                videoUrl: "https://www.youtube.com/embed/LXb3EKWsInQ"
+                videos: [
+                    { url: "https://www.youtube.com/embed/LXb3EKWsInQ", title: "LED COB Demo", duration: "3:45" }
+                ]
             },
             {
                 id: 3,
                 title: "Sistema de Seguridad con IA",
                 description: "Cámaras inteligentes con detección de personas y automatizaciones. Notificaciones instantáneas en tiempo real.",
                 thumbnail: "https://images.unsplash.com/photo-1557324232-b8917d3c3dcb?w=800&h=600&fit=crop&q=80",
-                duration: "4:12",
-                videoUrl: "https://www.youtube.com/embed/Y6693gFbHsM"
+                videos: [
+                    { url: "https://www.youtube.com/embed/Y6693gFbHsM", title: "Seguridad IA", duration: "4:12" }
+                ]
             },
             {
                 id: 4,
                 title: "Control de Portón Automático",
                 description: "Apertura automática del portón al llegar a casa usando geolocalización. Control total desde el smartphone.",
                 thumbnail: "https://images.unsplash.com/photo-1582407947304-fd86f028f716?w=800&h=600&fit=crop&q=80",
-                duration: "2:58",
-                videoUrl: "https://www.youtube.com/embed/2KXdIwGBpIU"
+                videos: [
+                    { url: "https://www.youtube.com/embed/2KXdIwGBpIU", title: "Portón Automático", duration: "2:58" }
+                ]
             },
             {
                 id: 5,
                 title: "Casa Inteligente Completa",
                 description: "Transformación completa de una vivienda con control total de luces, climatización y seguridad mediante Home Assistant.",
                 thumbnail: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800&h=600&fit=crop&q=80",
-                duration: "5:24",
-                videoUrl: "https://www.youtube.com/embed/3Xpd2fFWWVg"
+                videos: [
+                    { url: "https://www.youtube.com/embed/3Xpd2fFWWVg", title: "Casa Completa", duration: "5:24" }
+                ]
             },
             {
                 id: 6,
                 title: "Sensores y Automatizaciones Avanzadas",
                 description: "Sistema inteligente que detecta presencia y ajusta luces, temperatura y persianas automáticamente.",
                 thumbnail: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800&h=600&fit=crop&q=80",
-                duration: "4:45",
-                videoUrl: "https://www.youtube.com/embed/wOq7BIJ6ItM"
+                videos: [
+                    { url: "https://www.youtube.com/embed/wOq7BIJ6ItM", title: "Automatizaciones", duration: "4:45" }
+                ]
             }
         ];
+
+        // Índices de videos para navegación
+        window.videoIndices = {};
 
         // Render services
         function renderServices() {
@@ -969,8 +981,12 @@
         // Render videos
         function renderVideos() {
             const gallery = document.getElementById('videoGallery');
-            gallery.innerHTML = videos.map(video => `
-                <div class="group cursor-pointer" onclick="openVideoModal('${video.videoUrl}', '${video.title}')">
+            gallery.innerHTML = videos.map(video => {
+                const hasMultipleVideos = video.videos && video.videos.length > 1;
+                const totalDuration = video.videos ? video.videos.reduce((acc, v) => acc + parseInt(v.duration || 0), 0) : 0;
+                
+                return `
+                <div class="group cursor-pointer" onclick="openVideoModal(${video.id})">
                     <div class="relative aspect-video rounded-2xl overflow-hidden shadow-soft border border-slate-100 mb-4 video-overlay">
                         <img 
                             alt="${video.title}"
@@ -984,9 +1000,17 @@
                         </div>
                         <div class="absolute bottom-4 right-4">
                             <span class="px-2 py-1 rounded bg-black/50 backdrop-blur-md text-[10px] text-white font-medium">
-                                ${video.duration}
+                                ${video.videos && video.videos[0] ? video.videos[0].duration : ''}
                             </span>
                         </div>
+                        ${hasMultipleVideos ? `
+                            <div class="absolute top-4 right-4">
+                                <span class="px-2 py-1 rounded-full bg-black/60 backdrop-blur-sm text-[10px] text-white font-medium flex items-center gap-1">
+                                    <span class="material-icons-round text-xs">video_library</span>
+                                    ${video.videos.length} videos
+                                </span>
+                            </div>
+                        ` : ''}
                     </div>
                     <h3 class="font-bold text-slate-900 mb-1 group-hover:text-primary transition-colors">
                         ${video.title}
@@ -995,7 +1019,12 @@
                         ${video.description}
                     </p>
                 </div>
-            `).join('');
+            `}).join('');
+            
+            // Inicializar índices de videos
+            videos.forEach(video => {
+                window.videoIndices[video.id] = 0;
+            });
         }
 
         // Render kits
@@ -1429,17 +1458,212 @@
         };
 
         // Video Modal
-        window.openVideoModal = (videoUrl, title) => {
-            document.getElementById('videoFrame').src = videoUrl + '?autoplay=1';
-            document.getElementById('videoTitle').textContent = title;
+        let currentVideoId = null;
+
+        window.openVideoModal = (videoId) => {
+            const video = videos.find(v => v.id === videoId);
+            if (!video || !video.videos || video.videos.length === 0) return;
+
+            currentVideoId = videoId;
+            const videoArray = video.videos;
+            const hasMultipleVideos = videoArray.length > 1;
+            const currentIndex = window.videoIndices[videoId] || 0;
+            const currentVideo = videoArray[currentIndex];
+
+            // Actualizar iframe
+            document.getElementById('videoFrame').src = currentVideo.url + (currentVideo.url.includes('youtube') ? '?autoplay=1' : '');
+            
+            // Actualizar título
+            document.getElementById('videoTitle').innerHTML = `
+                <span class="text-slate-900">${video.title}</span>
+                ${hasMultipleVideos ? `<span class="text-primary text-sm ml-2">• ${currentVideo.title}</span>` : ''}
+            `;
+
+            // Actualizar el contenido del modal para navegación
+            const modalContent = document.querySelector('#videoModal .bg-white');
+            
+            // Agregar navegación si hay múltiples videos
+            if (hasMultipleVideos) {
+                modalContent.innerHTML = `
+                    <div class="relative">
+                        <button 
+                            onclick="closeVideoModal()"
+                            class="absolute top-4 right-4 z-10 w-10 h-10 rounded-full bg-white/90 backdrop-blur-sm flex items-center justify-center hover:bg-white transition-colors"
+                        >
+                            <span class="material-icons-round text-slate-900">close</span>
+                        </button>
+                        
+                        <!-- Botones de navegación -->
+                        <button 
+                            onclick="changeVideo(-1)"
+                            class="absolute left-4 top-1/2 -translate-y-1/2 z-10 w-12 h-12 rounded-full bg-white/90 backdrop-blur-sm flex items-center justify-center hover:bg-white transition-all shadow-lg"
+                        >
+                            <span class="material-icons-round text-slate-900 text-2xl">chevron_left</span>
+                        </button>
+                        <button 
+                            onclick="changeVideo(1)"
+                            class="absolute right-4 top-1/2 -translate-y-1/2 z-10 w-12 h-12 rounded-full bg-white/90 backdrop-blur-sm flex items-center justify-center hover:bg-white transition-all shadow-lg"
+                        >
+                            <span class="material-icons-round text-slate-900 text-2xl">chevron_right</span>
+                        </button>
+                        
+                        <div class="aspect-video">
+                            <iframe 
+                                id="videoFrame"
+                                class="w-full h-full"
+                                src="${currentVideo.url}${currentVideo.url.includes('youtube') ? '?autoplay=1' : ''}"
+                                frameborder="0"
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                allowfullscreen
+                            ></iframe>
+                        </div>
+                        
+                        <!-- Contador -->
+                        <div class="absolute top-4 left-4">
+                            <span class="px-3 py-1.5 rounded-full bg-black/60 backdrop-blur-sm text-sm text-white font-medium">
+                                <span id="videoCounter">${currentIndex + 1}</span> / ${videoArray.length}
+                            </span>
+                        </div>
+                    </div>
+                    
+                    <!-- Indicadores de puntos -->
+                    <div class="flex justify-center gap-2 py-3 bg-slate-50">
+                        ${videoArray.map((v, index) => `
+                            <button 
+                                onclick="setVideo(${index})"
+                                class="video-dot w-3 h-3 rounded-full transition-all ${index === currentIndex ? 'bg-primary w-8' : 'bg-slate-300'}"
+                                data-video-dot-index="${index}"
+                            ></button>
+                        `).join('')}
+                    </div>
+                    
+                    <!-- Lista de videos -->
+                    <div class="p-4 bg-slate-50 border-t border-slate-200">
+                        <p class="text-xs font-bold text-slate-500 mb-2">VIDEOS EN ESTA SERIE</p>
+                        <div class="flex gap-2 overflow-x-auto pb-2">
+                            ${videoArray.map((v, index) => `
+                                <button 
+                                    onclick="setVideo(${index})"
+                                    class="flex-shrink-0 px-3 py-2 rounded-lg text-xs font-medium transition-all ${index === currentIndex ? 'bg-primary text-white' : 'bg-white text-slate-600 hover:bg-slate-100 border border-slate-200'}"
+                                >
+                                    <span class="material-icons-round text-sm align-middle mr-1">${index === currentIndex ? 'play_circle' : 'play_circle_outline'}</span>
+                                    ${v.title}
+                                    <span class="ml-2 opacity-70">${v.duration}</span>
+                                </button>
+                            `).join('')}
+                        </div>
+                    </div>
+                    
+                    <div class="p-6">
+                        <h3 id="videoTitle" class="text-xl font-bold text-slate-900">
+                            ${video.title}
+                            <span class="text-primary text-sm ml-2">• ${currentVideo.title}</span>
+                        </h3>
+                        <p class="text-sm text-slate-500 mt-2">${video.description}</p>
+                    </div>
+                `;
+            } else {
+                modalContent.innerHTML = `
+                    <div class="relative">
+                        <button 
+                            onclick="closeVideoModal()"
+                            class="absolute top-4 right-4 z-10 w-10 h-10 rounded-full bg-white/90 backdrop-blur-sm flex items-center justify-center hover:bg-white transition-colors"
+                        >
+                            <span class="material-icons-round text-slate-900">close</span>
+                        </button>
+                        <div class="aspect-video">
+                            <iframe 
+                                id="videoFrame"
+                                class="w-full h-full"
+                                src="${currentVideo.url}${currentVideo.url.includes('youtube') ? '?autoplay=1' : ''}"
+                                frameborder="0"
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                allowfullscreen
+                            ></iframe>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <h3 id="videoTitle" class="text-xl font-bold text-slate-900">${video.title}</h3>
+                        <p class="text-sm text-slate-500 mt-2">${video.description}</p>
+                    </div>
+                `;
+            }
+
             document.getElementById('videoModal').classList.remove('hidden');
             document.body.style.overflow = 'hidden';
         };
 
+        // Navegación de videos
+        window.changeVideo = (direction) => {
+            const video = videos.find(v => v.id === currentVideoId);
+            if (!video || !video.videos || video.videos.length <= 1) return;
+
+            const videoArray = video.videos;
+            const currentIndex = window.videoIndices[currentVideoId] || 0;
+            let newIndex = currentIndex + direction;
+
+            if (newIndex < 0) newIndex = videoArray.length - 1;
+            if (newIndex >= videoArray.length) newIndex = 0;
+
+            setVideo(newIndex);
+        };
+
+        window.setVideo = (index) => {
+            const video = videos.find(v => v.id === currentVideoId);
+            if (!video || !video.videos) return;
+
+            const videoArray = video.videos;
+            if (index < 0 || index >= videoArray.length) return;
+
+            window.videoIndices[currentVideoId] = index;
+            const currentVideo = videoArray[index];
+
+            // Actualizar iframe
+            const iframe = document.getElementById('videoFrame');
+            iframe.src = currentVideo.url + (currentVideo.url.includes('youtube') ? '?autoplay=1' : '');
+
+            // Actualizar contador
+            const counter = document.getElementById('videoCounter');
+            if (counter) counter.textContent = index + 1;
+
+            // Actualizar puntos
+            document.querySelectorAll('.video-dot').forEach((dot, i) => {
+                if (i === index) {
+                    dot.classList.add('bg-primary', 'w-8');
+                    dot.classList.remove('bg-slate-300', 'w-3');
+                } else {
+                    dot.classList.remove('bg-primary', 'w-8');
+                    dot.classList.add('bg-slate-300', 'w-3');
+                }
+            });
+
+            // Actualizar botones de lista
+            document.querySelectorAll('#videoModal button[onclick^="setVideo"]').forEach((btn, i) => {
+                if (i === index) {
+                    btn.classList.add('bg-primary', 'text-white');
+                    btn.classList.remove('bg-white', 'text-slate-600', 'border', 'border-slate-200');
+                } else {
+                    btn.classList.remove('bg-primary', 'text-white');
+                    btn.classList.add('bg-white', 'text-slate-600', 'border', 'border-slate-200');
+                }
+            });
+
+            // Actualizar título
+            const titleEl = document.getElementById('videoTitle');
+            if (titleEl) {
+                titleEl.innerHTML = `
+                    ${video.title}
+                    <span class="text-primary text-sm ml-2">• ${currentVideo.title}</span>
+                `;
+            }
+        };
+
         window.closeVideoModal = () => {
-            document.getElementById('videoFrame').src = '';
+            const iframe = document.getElementById('videoFrame');
+            if (iframe) iframe.src = '';
             document.getElementById('videoModal').classList.add('hidden');
             document.body.style.overflow = 'auto';
+            currentVideoId = null;
         };
 
         // Kit Modal

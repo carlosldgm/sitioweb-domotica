@@ -10,3 +10,6 @@
 *.njsproj
 *.sln
 *.sw?
+
+# Videos pesados (>100MB) - usar hosting externo
+videos/living_comedor_terraza.mp4

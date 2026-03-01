@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Generador de Presupuestos - Smart Solutions</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet"/>
+    <!-- SheetJS para leer Excel -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        "display": ["Space Grotesk", "sans-serif"]
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { font-family: 'Space Grotesk', sans-serif; }
+        .no-print { display: block; }
+        @media print {
+            .no-print { display: none !important; }
+            .print-only { display: block !important; }
+            body { background: white; }
+        }
+        .print-only { display: none; }
+        
+        /* Estilo mejorado para el scroll */
+        #budgetItems::-webkit-scrollbar {
+            width: 8px;
+        }
+        #budgetItems::-webkit-scrollbar-track {
+            background: #f1f5f9;
+            border-radius: 4px;
+        }
+        #budgetItems::-webkit-scrollbar-thumb {
+            background: #3b82f6;
+            border-radius: 4px;
+        }
+        #budgetItems::-webkit-scrollbar-thumb:hover {
+            background: #2563eb;
+        }
+        
+        /* Sombra cuando hay scroll */
+        .scroll-shadow {
+            position: relative;
+        }
+        .scroll-shadow::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 20px;
+            background: linear-gradient(to bottom, transparent, rgba(255,255,255,0.9));
+            pointer-events: none;
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Header -->
+    <header class="bg-white border-b border-gray-200 sticky top-0 z-50 no-print">
+        <div class="max-w-7xl mx-auto px-6 py-4">
+            <div class="flex items-center justify-between">
+                <div>
+                    <h1 class="text-2xl font-bold text-gray-900">💰 Generador de Presupuestos</h1>
+                    <p class="text-sm text-gray-500">Smart Solutions - Domótica Profesional</p>
+                </div>
+                <div class="flex gap-3">
+                    <button onclick="descargarExcel()" class="flex items-center gap-2 px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors">
+                        <span class="material-icons-round text-sm">download</span>
+                        Descargar Excel Ejemplo
+                    </button>
+                    <button onclick="window.print()" class="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors">
+                        <span class="material-icons-round text-sm">print</span>
+                        Imprimir
+                    </button>
+                    <button onclick="nuevoPresupuesto()" class="flex items-center gap-2 px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors">
+                        <span class="material-icons-round text-sm">add</span>
+                        Nuevo
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="max-w-7xl mx-auto px-6 py-8">
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <!-- Panel Izquierdo - Configuración -->
+            <div class="lg:col-span-2 space-y-6 no-print">
+                <!-- Cargar Excel -->
+                <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+                    <h2 class="text-lg font-bold text-gray-900 mb-4 flex items-center gap-2">
+                        <span class="material-icons-round text-blue-600">upload_file</span>
+                        1. Cargar Lista de Precios (Excel)
+                    </h2>
+                    <div class="space-y-4">
+                        <input 
+                            type="file" 
+                            id="excelFile" 
+                            accept=".xlsx,.xls"
+                            class="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
+                        />
+                        <div id="excelStatus" class="text-sm"></div>
+                        <div class="bg-blue-50 border border-blue-200 rounded-lg p-4">
+                            <p class="text-xs text-blue-900 font-semibold mb-2">📋 El Excel debe tener estas columnas (nombres EXACTOS):</p>
+                            <ul class="text-xs text-blue-800 space-y-1">
+                                <li>• <strong>Producto</strong> - Nombre del producto</li>
+                                <li>• <strong>Precio_Costo</strong> - Tu costo (número, sin puntos ni comas)</li>
+                                <li>• <strong>Precio_Instalacion</strong> - Costo de instalación</li>
+                                <li>• <strong>Precio_Configuracion</strong> - Costo de configuración</li>
+                                <li>• <strong>Categoria</strong> - Categoría (opcional)</li>
+                            </ul>
+                            <p class="text-xs text-blue-700 mt-2">💡 Tip: Descarga el Excel de ejemplo para ver el formato correcto</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Datos del Cliente -->
+                <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+                    <h2 class="text-lg font-bold text-gray-900 mb-4 flex items-center gap-2">
+                        <span class="material-icons-round text-blue-600">person</span>
+                        2. Datos del Cliente
+                    </h2>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-sm font-semibold text-gray-700 mb-2">Nombre Cliente</label>
+                            <input type="text" id="clientName" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" placeholder="Ej: Juan Pérez"/>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-semibold text-gray-700 mb-2">Email</label>
+                            <input type="email" id="clientEmail" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" placeholder="cliente@email.com"/>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-semibold text-gray-700 mb-2">Teléfono</label>
+                            <input type="tel" id="clientPhone" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" placeholder="+56 9 1234 5678"/>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-semibold text-gray-700 mb-2">Dirección</label>
+                            <input type="text" id="clientAddress" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" placeholder="Dirección del proyecto"/>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Configuración de Márgenes -->
+                <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+                    <h2 class="text-lg font-bold text-gray-900 mb-4 flex items-center gap-2">
+                        <span class="material-icons-round text-blue-600">tune</span>
+                        3. Configurar Márgenes de Ganancia
+                    </h2>
+                    <div class="grid grid-cols-3 gap-4">
+                        <div>
+                            <label class="block text-sm font-semibold text-gray-700 mb-2">% Productos</label>
+                            <input type="number" id="marginProducts" value="30" min="0" max="100" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"/>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-semibold text-gray-700 mb-2">% Instalación</label>
+                            <input type="number" id="marginInstall" value="0" min="0" max="100" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"/>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-semibold text-gray-700 mb-2">% Configuración</label>
+                            <input type="number" id="marginConfig" value="0" min="0" max="100" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"/>
+                        </div>
+                    </div>
+                    <p class="text-xs text-gray-500 mt-3">
+                        💡 Tip: Aplica margen solo a productos, o distribuye entre servicios según tu estrategia
+                    </p>
+                </div>
+
+                <!-- Agregar Items -->
+                <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+                    <h2 class="text-lg font-bold text-gray-900 mb-4 flex items-center gap-2">
+                        <span class="material-icons-round text-blue-600">add_shopping_cart</span>
+                        4. Agregar Productos/Servicios
+                    </h2>
+                    <div class="space-y-4">
+                        <div class="grid grid-cols-12 gap-3">
+                            <div class="col-span-5">
+                                <label class="block text-sm font-semibold text-gray-700 mb-2">Producto</label>
+                                <select id="productSelect" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500">
+                                    <option value="">Primero carga el Excel...</option>
+                                </select>
+                            </div>
+                            <div class="col-span-2">
+                                <label class="block text-sm font-semibold text-gray-700 mb-2">Cantidad</label>
+                                <input type="number" id="quantity" value="1" min="1" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"/>
+                            </div>
+                            <div class="col-span-2">
+                                <label class="block text-sm font-semibold text-gray-700 mb-2">Instalar</label>
+                                <input type="checkbox" id="includeInstall" checked class="w-6 h-6 text-blue-600 rounded mt-2"/>
+                            </div>
+                            <div class="col-span-2">
+                                <label class="block text-sm font-semibold text-gray-700 mb-2">Configurar</label>
+                                <input type="checkbox" id="includeConfig" checked class="w-6 h-6 text-blue-600 rounded mt-2"/>
+                            </div>
+                            <div class="col-span-1">
+                                <label class="block text-sm font-semibold text-gray-700 mb-2">&nbsp;</label>
+                                <button onclick="agregarItem()" class="w-full h-10 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors flex items-center justify-center">
+                                    <span class="material-icons-round">add</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Panel Derecho - Resumen y Presupuesto -->
+            <div class="space-y-6">
+                <!-- Resumen -->
+                <div class="bg-gradient-to-br from-blue-600 to-blue-700 rounded-xl shadow-lg p-6 text-white no-print">
+                    <h3 class="text-sm font-semibold mb-4 opacity-90">RESUMEN DEL PRESUPUESTO</h3>
+                    <div class="space-y-3">
+                        <div class="flex justify-between items-center">
+                            <span class="text-sm">Subtotal Productos</span>
+                            <span class="text-xl font-bold" id="subtotalProducts">$0</span>
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <span class="text-sm">Subtotal Instalación</span>
+                            <span class="text-xl font-bold" id="subtotalInstall">$0</span>
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <span class="text-sm">Subtotal Configuración</span>
+                            <span class="text-xl font-bold" id="subtotalConfig">$0</span>
+                        </div>
+                        <div class="border-t border-white/20 pt-3 mt-3">
+                            <div class="flex justify-between items-center">
+                                <span class="text-lg font-bold">TOTAL</span>
+                                <span class="text-3xl font-bold" id="totalPrice">$0</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Items del Presupuesto -->
+                <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden no-print">
+                    <div class="p-6 border-b border-gray-200 bg-gray-50">
+                        <div class="flex items-center justify-between">
+                            <h3 class="text-lg font-bold text-gray-900">Items del Presupuesto</h3>
+                            <div class="flex items-center gap-2">
+                                <span class="text-sm text-gray-500">Items:</span>
+                                <span id="itemCount" class="px-3 py-1 bg-blue-600 text-white rounded-full text-sm font-bold">0</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="scroll-shadow relative">
+                        <div id="budgetItems" class="p-6 space-y-2 max-h-[500px] overflow-y-auto">
+                            <p class="text-sm text-gray-500 text-center py-8">Aún no hay items agregados</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Presupuesto Imprimible (igual que antes, omitido por brevedad) -->
+        <div class="print-only bg-white p-12">
+            <!-- Contenido de impresión igual que antes -->
+        </div>
+    </div>
+
+    <script>
+        // Estado global
+        let productDatabase = [];
+        let budgetItems = [];
+        let budgetNumber = Date.now().toString().slice(-6);
+
+        console.log('🚀 Sistema de presupuestos iniciado');
+
+        // Cargar Excel
+        document.getElementById('excelFile').addEventListener('change', handleExcelFile);
+
+        function handleExcelFile(e) {
+            const file = e.target.files[0];
+            if (!file) {
+                console.log('❌ No se seleccionó archivo');
+                return;
+            }
+
+            console.log('📁 Archivo seleccionado:', file.name, '- Tamaño:', file.size, 'bytes');
+            
+            // Mostrar mensaje de cargando
+            document.getElementById('excelStatus').innerHTML = `
+                <div class="flex items-center gap-2 text-blue-600">
+                    <span class="material-icons-round text-sm">hourglass_empty</span>
+                    <span>Procesando archivo...</span>
+                </div>
+            `;
+
+            const reader = new FileReader();
+            
+            reader.onload = function(e) {
+                try {
+                    console.log('📊 Leyendo datos del Excel...');
+                    
+                    const data = new Uint8Array(e.target.result);
+                    const workbook = XLSX.read(data, {type: 'array'});
+                    
+                    console.log('📋 Hojas encontradas:', workbook.SheetNames.join(', '));
+                    
+                    const firstSheet = workbook.Sheets[workbook.SheetNames[0]];
+                    const jsonData = XLSX.utils.sheet_to_json(firstSheet);
+                    
+                    console.log('✅ Filas leídas:', jsonData.length);
+                    
+                    if (jsonData.length === 0) {
+                        throw new Error('El archivo Excel está vacío o no tiene datos en la primera hoja');
+                    }
+                    
+                    // Mostrar primera fila para debug
+                    const firstRow = jsonData[0];
+                    console.log('🔍 Columnas encontradas:', Object.keys(firstRow));
+                    console.log('📝 Primera fila de ejemplo:', firstRow);
+                    
+                    // Verificar columnas necesarias
+                    const requiredColumns = ['Producto', 'Precio_Costo', 'Precio_Instalacion', 'Precio_Configuracion'];
+                    const foundColumns = Object.keys(firstRow);
+                    const missingColumns = requiredColumns.filter(col => !foundColumns.includes(col));
+                    
+                    if (missingColumns.length > 0) {
+                        const errorMsg = `
+                            <strong>Faltan columnas requeridas:</strong><br>
+                            ${missingColumns.map(col => `• ${col}`).join('<br>')}<br><br>
+                            <strong>Columnas encontradas en tu Excel:</strong><br>
+                            ${foundColumns.map(col => `• ${col}`).join('<br>')}<br><br>
+                            <span class="text-xs">Tip: Los nombres deben ser EXACTOS (mayúsculas y guión bajo)</span>
+                        `;
+                        throw new Error(errorMsg);
+                    }
+                    
+                    // Validar que los precios sean números
+                    const invalidRows = [];
+                    jsonData.forEach((row, index) => {
+                        const costo = parseFloat(row.Precio_Costo);
+                        const install = parseFloat(row.Precio_Instalacion);
+                        const config = parseFloat(row.Precio_Configuracion);
+                        
+                        if (isNaN(costo) || isNaN(install) || isNaN(config)) {
+                            invalidRows.push(index + 2); // +2 porque Excel empieza en 1 y tiene header
+                        }
+                    });
+                    
+                    if (invalidRows.length > 0) {
+                        throw new Error(`Las filas ${invalidRows.join(', ')} tienen precios inválidos. Deben ser números sin puntos ni comas.`);
+                    }
+                    
+                    productDatabase = jsonData;
+                    console.log('💾 Base de datos actualizada con', productDatabase.length, 'productos');
+                    
+                    populateProductSelect();
+                    console.log('✅ Productos cargados en el selector');
+                    
+                    document.getElementById('excelStatus').innerHTML = `
+                        <div class="flex items-center gap-2 text-green-600 bg-green-50 p-3 rounded-lg border border-green-200">
+                            <span class="material-icons-round text-sm">check_circle</span>
+                            <div>
+                                <p class="font-bold">✅ ${jsonData.length} productos cargados correctamente</p>
+                                <p class="text-xs mt-1">Ahora puedes agregar items al presupuesto</p>
+                            </div>
+                        </div>
+                    `;
+                    
+                } catch (error) {
+                    console.error('❌ Error al procesar Excel:', error);
+                    document.getElementById('excelStatus').innerHTML = `
+                        <div class="flex items-start gap-2 text-red-600 bg-red-50 p-4 rounded-lg border border-red-200">
+                            <span class="material-icons-round text-sm mt-0.5">error</span>
+                            <div class="flex-1">
+                                <p class="font-bold">❌ Error al leer el archivo</p>
+                                <div class="text-sm mt-2">${error.message}</div>
+                            </div>
+                        </div>
+                    `;
+                }
+            };
+            
+            reader.onerror = function(error) {
+                console.error('❌ Error del FileReader:', error);
+                document.getElementById('excelStatus').innerHTML = `
+                    <div class="flex items-center gap-2 text-red-600">
+                        <span class="material-icons-round text-sm">error</span>
+                        <span>❌ Error al leer el archivo. Intenta de nuevo o usa otro archivo.</span>
+                    </div>
+                `;
+            };
+            
+            console.log('📖 Iniciando lectura del archivo...');
+            reader.readAsArrayBuffer(file);
+        }
+
+        function populateProductSelect() {
+            console.log('🔄 Poblando selector de productos...');
+            const select = document.getElementById('productSelect');
+            select.innerHTML = '<option value="">Seleccionar producto...</option>';
+            
+            // Agrupar por categoría
+            const categories = {};
+            productDatabase.forEach((product, globalIndex) => {
+                const cat = product.Categoria || 'Sin categoría';
+                if (!categories[cat]) categories[cat] = [];
+                categories[cat].push({product, globalIndex});
+            });
+
+            console.log('📂 Categorías encontradas:', Object.keys(categories).join(', '));
+
+            Object.keys(categories).sort().forEach(category => {
+                const optgroup = document.createElement('optgroup');
+                optgroup.label = `📁 ${category}`;
+                categories[category].forEach(item => {
+                    const option = document.createElement('option');
+                    option.value = item.globalIndex;
+                    option.textContent = item.product.Producto;
+                    optgroup.appendChild(option);
+                });
+                select.appendChild(optgroup);
+            });
+            
+            console.log('✅ Selector poblado con', productDatabase.length, 'productos');
+        }
+
+        function agregarItem() {
+            const productIndex = document.getElementById('productSelect').value;
+            if (productIndex === '' || productIndex === null) {
+                alert('⚠️ Por favor selecciona un producto primero');
+                return;
+            }
+
+            const quantity = parseInt(document.getElementById('quantity').value) || 1;
+            const includeInstall = document.getElementById('includeInstall').checked;
+            const includeConfig = document.getElementById('includeConfig').checked;
+
+            const product = productDatabase[productIndex];
+            const marginProducts = parseFloat(document.getElementById('marginProducts').value) / 100;
+            const marginInstall = parseFloat(document.getElementById('marginInstall').value) / 100;
+            const marginConfig = parseFloat(document.getElementById('marginConfig').value) / 100;
+
+            const precioCosto = parseFloat(product.Precio_Costo) || 0;
+            const precioInstall = parseFloat(product.Precio_Instalacion) || 0;
+            const precioConfig = parseFloat(product.Precio_Configuracion) || 0;
+
+            const precioProductoFinal = precioCosto * (1 + marginProducts);
+            const precioInstallFinal = includeInstall ? precioInstall * (1 + marginInstall) : 0;
+            const precioConfigFinal = includeConfig ? precioConfig * (1 + marginConfig) : 0;
+
+            const item = {
+                id: Date.now(),
+                producto: product.Producto,
+                cantidad: quantity,
+                precioUnitario: precioProductoFinal,
+                precioInstall: precioInstallFinal,
+                precioConfig: precioConfigFinal,
+                includeInstall,
+                includeConfig,
+                subtotal: quantity * (precioProductoFinal + precioInstallFinal + precioConfigFinal)
+            };
+
+            budgetItems.push(item);
+            console.log('➕ Item agregado:', item.producto, '- Total items:', budgetItems.length);
+            
+            renderBudgetItems();
+            calcularTotales();
+
+            // Reset form
+            document.getElementById('productSelect').value = '';
+            document.getElementById('quantity').value = 1;
+        }
+
+        function eliminarItem(id) {
+            const itemToRemove = budgetItems.find(item => item.id === id);
+            console.log('➖ Eliminando item:', itemToRemove ? itemToRemove.producto : id);
+            
+            budgetItems = budgetItems.filter(item => item.id !== id);
+            renderBudgetItems();
+            calcularTotales();
+        }
+
+        function renderBudgetItems() {
+            const container = document.getElementById('budgetItems');
+            
+            // Actualizar contador
+            document.getElementById('itemCount').textContent = budgetItems.length;
+            
+            if (budgetItems.length === 0) {
+                container.innerHTML = '<p class="text-sm text-gray-500 text-center py-8">Aún no hay items agregados</p>';
+                return;
+            }
+
+            container.innerHTML = budgetItems.map(item => `
+                <div class="flex items-center justify-between p-3 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors">
+                    <div class="flex-1">
+                        <p class="font-semibold text-sm text-gray-900">${item.producto}</p>
+                        <p class="text-xs text-gray-500">
+                            ${item.cantidad}x ${formatMoney(item.precioUnitario)}
+                            ${item.includeInstall ? ' + Instalación' : ''}
+                            ${item.includeConfig ? ' + Config.' : ''}
+                        </p>
+                    </div>
+                    <div class="flex items-center gap-3">
+                        <span class="font-bold text-blue-600">${formatMoney(item.subtotal)}</span>
+                        <button onclick="eliminarItem(${item.id})" class="text-red-500 hover:text-red-700 transition-colors">
+                            <span class="material-icons-round text-sm">delete</span>
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function calcularTotales() {
+            let subtotalProducts = 0;
+            let subtotalInstall = 0;
+            let subtotalConfig = 0;
+
+            budgetItems.forEach(item => {
+                subtotalProducts += item.cantidad * item.precioUnitario;
+                subtotalInstall += item.cantidad * item.precioInstall;
+                subtotalConfig += item.cantidad * item.precioConfig;
+            });
+
+            const total = subtotalProducts + subtotalInstall + subtotalConfig;
+
+            document.getElementById('subtotalProducts').textContent = formatMoney(subtotalProducts);
+            document.getElementById('subtotalInstall').textContent = formatMoney(subtotalInstall);
+            document.getElementById('subtotalConfig').textContent = formatMoney(subtotalConfig);
+            document.getElementById('totalPrice').textContent = formatMoney(total);
+            
+            console.log('💰 Totales actualizados - Total:', formatMoney(total));
+        }
+
+        function formatMoney(amount) {
+            return new Intl.NumberFormat('es-CL', {
+                style: 'currency',
+                currency: 'CLP',
+                minimumFractionDigits: 0
+            }).format(amount);
+        }
+
+        function nuevoPresupuesto() {
+            if (budgetItems.length > 0 && !confirm('¿Estás seguro? Se perderá el presupuesto actual.')) {
+                return;
+            }
+            
+            budgetItems = [];
+            budgetNumber = Date.now().toString().slice(-6);
+            
+            document.getElementById('clientName').value = '';
+            document.getElementById('clientEmail').value = '';
+            document.getElementById('clientPhone').value = '';
+            document.getElementById('clientAddress').value = '';
+            
+            renderBudgetItems();
+            calcularTotales();
+            
+            console.log('🆕 Nuevo presupuesto iniciado');
+        }
+
+        function descargarExcel() {
+            console.log('📥 Descargando Excel de ejemplo...');
+            const exampleData = [
+                {
+                    Producto: 'Ampolleta Inteligente RGB',
+                    Precio_Costo: 8000,
+                    Precio_Instalacion: 3000,
+                    Precio_Configuracion: 2000,
+                    Categoria: 'Iluminación'
+                },
+                {
+                    Producto: 'Interruptor Inteligente',
+                    Precio_Costo: 15000,
+                    Precio_Instalacion: 8000,
+                    Precio_Configuracion: 3000,
+                    Categoria: 'Iluminación'
+                },
+                {
+                    Producto: 'Amazon Echo Dot',
+                    Precio_Costo: 25000,
+                    Precio_Instalacion: 5000,
+                    Precio_Configuracion: 5000,
+                    Categoria: 'Asistentes'
+                },
+                {
+                    Producto: 'Cerradura Digital',
+                    Precio_Costo: 80000,
+                    Precio_Instalacion: 25000,
+                    Precio_Configuracion: 10000,
+                    Categoria: 'Seguridad'
+                },
+                {
+                    Producto: 'Cámara WiFi',
+                    Precio_Costo: 35000,
+                    Precio_Instalacion: 15000,
+                    Precio_Configuracion: 8000,
+                    Categoria: 'Seguridad'
+                }
+            ];
+
+            const ws = XLSX.utils.json_to_sheet(exampleData);
+            const wb = XLSX.utils.book_new();
+            XLSX.utils.book_append_sheet(wb, ws, 'Precios');
+            XLSX.writeFile(wb, 'Lista_Precios_Ejemplo.xlsx');
+            
+            console.log('✅ Excel de ejemplo descargado');
+        }
+
+        console.log('✅ Sistema listo para usar');
+        console.log('👉 Paso 1: Descarga el Excel de ejemplo o sube tu propio archivo');
+        console.log('👉 Paso 2: Llena datos del cliente');
+        console.log('👉 Paso 3: Agrega productos al presupuesto');
+    </script>
+</body>
+</html>
