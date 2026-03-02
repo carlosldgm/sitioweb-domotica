@@ -291,7 +291,7 @@
                 <div>
                     <h3 class="font-bold text-gray-900 mb-2">INFORMACIÓN DE CONTACTO</h3>
                     <p class="text-sm"><strong>Teléfono:</strong> +56 9 1234 5678</p>
-                    <p class="text-sm"><strong>Email:</strong> contacto@smartsolutions.cl</p>
+                    <p class="text-sm"><strong>Email:</strong> <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="c0a3afaeb4a1a3b4af80b3ada1b2b4b3afacb5b4a9afaeb3eea3ac">[email&#160;protected]</a></p>
                     <p class="text-sm"><strong>Web:</strong> www.smartsolutions.cl</p>
                 </div>
             </div>
@@ -342,7 +342,7 @@
         </div>
     </div>
 
-    <script>
+    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
         // Estado global
         let productDatabase = [];
         let budgetItems = [];
@@ -603,10 +603,7 @@
             }
 
             container.innerHTML = budgetItems.map(item => `
-                <div class="flex items-center justify-between p-3 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors">
-                    <div class="flex-1">
-                        <p class="font-semibold text-sm text-gray-900">${item.producto}</p>
-                        <p class="text-xs text-gray-500">
+                <div class="flex items-center justify-between p text-gray-500">
                             ${item.cantidad}x ${formatMoney(item.precioUnitario)}
                             ${item.includeInstall ? ' + Instalación' : ''}
                             ${item.includeConfig ? ' + Config.' : ''}
@@ -640,6 +637,11 @@
             document.getElementById('subtotalConfig').textContent = formatMoney(subtotalConfig);
             document.getElementById('totalPrice').textContent = formatMoney(total);
             
+            // ✨ Actualizar totales de impresión
+            document.getElementById('printSubtotalProducts').textContent = formatMoney(subtotalProducts);
+            document.getElementById('printSubtotalInstall').textContent = formatMoney(subtotalInstall);
+            document.getElementById('printSubtotalConfig').textContent = formatMoney(subtotalConfig);
+            document.getElementById('printTotal').textContent = formatMoney(total);
             
             // Actualizar tabla de impresión
             updatePrintTable();
