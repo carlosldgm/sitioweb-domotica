@@ -837,7 +837,6 @@
                 title: "Iluminación LED Inteligente",
                 description: "Instalación de tiras LED COB con sincronización de colores y control por voz. Efectos dinámicos y automatizaciones.",
                 thumbnail: "https://images.unsplash.com/photo-1513506003901-1e6a229e2d15?w=800&h=600&fit=crop&q=80",
-                disabled: true,  // ← No se muestra
                 videos: [
                     { url: "https://www.youtube.com/embed/LXb3EKWsInQ", title: "LED COB Demo", duration: "3:45" }
                 ]
@@ -847,7 +846,6 @@
                 title: "Sistema de Seguridad con IA",
                 description: "Cámaras inteligentes con detección de personas y automatizaciones. Notificaciones instantáneas en tiempo real.",
                 thumbnail: "https://images.unsplash.com/photo-1557324232-b8917d3c3dcb?w=800&h=600&fit=crop&q=80",
-                disabled: true,  // ← No se muestra
                 videos: [
                     { url: "https://www.youtube.com/embed/Y6693gFbHsM", title: "Seguridad IA", duration: "4:12" }
                 ]
@@ -857,7 +855,6 @@
                 title: "Control de Portón Automático",
                 description: "Apertura automática del portón al llegar a casa usando geolocalización. Control total desde el smartphone.",
                 thumbnail: "https://images.unsplash.com/photo-1582407947304-fd86f028f716?w=800&h=600&fit=crop&q=80",
-                disabled: true,  // ← No se muestra
                 videos: [
                     { url: "https://www.youtube.com/embed/2KXdIwGBpIU", title: "Portón Automático", duration: "2:58" }
                 ]
@@ -867,7 +864,6 @@
                 title: "Casa Inteligente Completa",
                 description: "Transformación completa de una vivienda con control total de luces, climatización y seguridad mediante Home Assistant.",
                 thumbnail: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800&h=600&fit=crop&q=80",
-                disabled: true,  // ← No se muestra
                 videos: [
                     { url: "https://www.youtube.com/embed/3Xpd2fFWWVg", title: "Casa Completa", duration: "5:24" }
                 ]
@@ -877,7 +873,6 @@
                 title: "Sensores y Automatizaciones Avanzadas",
                 description: "Sistema inteligente que detecta presencia y ajusta luces, temperatura y persianas automáticamente.",
                 thumbnail: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800&h=600&fit=crop&q=80",
-                disabled: true,  // ← No se muestra
                 videos: [
                     { url: "https://www.youtube.com/embed/wOq7BIJ6ItM", title: "Automatizaciones", duration: "4:45" }
                 ]
@@ -985,78 +980,52 @@
 
         // Render videos
         function renderVideos() {
-    const gallery = document.getElementById('videoGallery');
-
-    gallery.innerHTML = videos.map(video => {
-
-        const isDisabled = video.disabled === true;
-        const hasMultipleVideos = video.videos && video.videos.length > 1;
-
-        return `
-        <div 
-            class="group ${isDisabled ? 'opacity-50 grayscale cursor-not-allowed' : 'cursor-pointer'}"
-            ${isDisabled ? '' : `onclick="openVideoModal(${video.id})"`}
-        >
-
-            <div class="relative aspect-video rounded-2xl overflow-hidden shadow-soft border border-slate-100 mb-4 video-overlay">
-
-                <img 
-                    alt="${video.title}"
-                    class="w-full h-full object-cover transition-transform duration-700 ${isDisabled ? '' : 'group-hover:scale-105'}"
-                    src="${video.thumbnail}"
-                />
-
-                ${!isDisabled ? `
-                <div class="absolute inset-0 bg-slate-900/20 group-hover:bg-slate-900/40 transition-colors flex items-center justify-center">
-                    <div class="play-button w-14 h-14 rounded-full bg-white/90 backdrop-blur-sm flex items-center justify-center text-primary shadow-xl transition-all duration-300">
-                        <span class="material-icons-round text-3xl ml-1">play_arrow</span>
+            const gallery = document.getElementById('videoGallery');
+            gallery.innerHTML = videos.map(video => {
+                const hasMultipleVideos = video.videos && video.videos.length > 1;
+                const totalDuration = video.videos ? video.videos.reduce((acc, v) => acc + parseInt(v.duration || 0), 0) : 0;
+                
+                return `
+                <div class="group cursor-pointer" onclick="openVideoModal(${video.id})">
+                    <div class="relative aspect-video rounded-2xl overflow-hidden shadow-soft border border-slate-100 mb-4 video-overlay">
+                        <img 
+                            alt="${video.title}"
+                            class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                            src="${video.thumbnail}"
+                        />
+                        <div class="absolute inset-0 bg-slate-900/20 group-hover:bg-slate-900/40 transition-colors flex items-center justify-center">
+                            <div class="play-button w-14 h-14 rounded-full bg-white/90 backdrop-blur-sm flex items-center justify-center text-primary shadow-xl transition-all duration-300">
+                                <span class="material-icons-round text-3xl ml-1">play_arrow</span>
+                            </div>
+                        </div>
+                        <div class="absolute bottom-4 right-4">
+                            <span class="px-2 py-1 rounded bg-black/50 backdrop-blur-md text-[10px] text-white font-medium">
+                                ${video.videos && video.videos[0] ? video.videos[0].duration : ''}
+                            </span>
+                        </div>
+                        ${hasMultipleVideos ? `
+                            <div class="absolute top-4 right-4">
+                                <span class="px-2 py-1 rounded-full bg-black/60 backdrop-blur-sm text-[10px] text-white font-medium flex items-center gap-1">
+                                    <span class="material-icons-round text-xs">video_library</span>
+                                    ${video.videos.length} videos
+                                </span>
+                            </div>
+                        ` : ''}
                     </div>
+                    <h3 class="font-bold text-slate-900 mb-1 group-hover:text-primary transition-colors">
+                        ${video.title}
+                    </h3>
+                    <p class="text-xs text-slate-500 leading-relaxed">
+                        ${video.description}
+                    </p>
                 </div>
-                ` : ''}
-
-                ${isDisabled ? `
-                <div class="absolute inset-0 flex items-center justify-center bg-black/40">
-                    <span class="bg-white text-slate-900 text-xs font-bold px-4 py-1.5 rounded-full shadow">
-                        🚧 Próximamente
-                    </span>
-                </div>
-                ` : ''}
-
-                ${hasMultipleVideos ? `
-                <div class="absolute top-4 right-4">
-                    <span class="px-2 py-1 rounded-full bg-black/60 backdrop-blur-sm text-[10px] text-white font-medium flex items-center gap-1">
-                        <span class="material-icons-round text-xs">video_library</span>
-                        ${video.videos.length}
-                    </span>
-                </div>
-                ` : ''}
-
-                ${!isDisabled && video.videos && video.videos[0] ? `
-                <div class="absolute bottom-4 right-4">
-                    <span class="px-2 py-1 rounded bg-black/50 backdrop-blur-md text-[10px] text-white font-medium">
-                        ${video.videos[0].duration || ''}
-                    </span>
-                </div>
-                ` : ''}
-
-            </div>
-
-            <h3 class="font-bold text-slate-900 mb-1 ${isDisabled ? '' : 'group-hover:text-primary'} transition-colors">
-                ${video.title}
-            </h3>
-
-            <p class="text-xs text-slate-500 leading-relaxed">
-                ${video.description}
-            </p>
-
-        </div>
-        `;
-    }).join('');
-
-    videos.forEach(video => {
-        window.videoIndices[video.id] = 0;
-    });
-}
+            `}).join('');
+            
+            // Inicializar índices de videos
+            videos.forEach(video => {
+                window.videoIndices[video.id] = 0;
+            });
+        }
 
         // Render kits
         function renderKits() {
